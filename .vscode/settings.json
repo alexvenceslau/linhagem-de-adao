@@ -1,0 +1,146 @@
+{
+  // MCP Server Configuration for Linhagem de Adão Project
+  "mcp.servers": {
+    // GitHub integration for repository management and issues
+    "github": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-github"],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "${env:GITHUB_TOKEN}"
+      }
+    },
+
+    // Filesystem operations for project structure management
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/alexvenceslau/dev/linhagem-de-adao"
+      ]
+    },
+
+    // Browser automation for local testing (localhost, dev server)
+    "browser": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    },
+
+    // JSON server for handling genealogy data files
+    "json-processor": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-everything"]
+    },
+
+    // Git operations for version control
+    "git": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-git",
+        "--repository",
+        "/Users/alexvenceslau/dev/linhagem-de-adao"
+      ]
+    },
+
+    // Memory for maintaining context across sessions
+    "memory": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-memory"]
+    },
+
+    // Context7 server for TypeScript documentation and examples
+    "context7": {
+      "command": "npx",
+      "args": ["-y", "@context7/mcp-server"],
+      "env": {
+        "CONTEXT7_LANGUAGE": "typescript",
+        "CONTEXT7_PORT": "8080"
+      }
+    }
+  },
+
+  // Project-specific settings for Biblical genealogy project
+  "astro.config.path": "./astro.config.mjs",
+  "typescript.preferences.importModuleSpecifier": "relative",
+  "vue.autoInsert.dotValue": true,
+  "vue.autoInsert.parentheses": true,
+
+  // File associations for biblical genealogy data
+  "files.associations": {
+    "genealogia-*.json": "jsonc",
+    "*.astro": "astro",
+    "*.vue": "vue",
+    "*.json": "jsonc"
+  },
+
+  // JSON-specific settings for genealogy data
+  "json.schemas": [
+    {
+      "fileMatch": ["genealogia-*.json"],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "metadata": {
+            "type": "object",
+            "properties": {
+              "title": { "type": "string" },
+              "version": { "type": "string" },
+              "source": { "type": "string" },
+              "variant": { "type": "string" }
+            }
+          },
+          "blocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "generation": { "type": "number" },
+                "father": { "type": "string" },
+                "mother": { "type": "string" },
+                "age_at_death": { "type": "number" },
+                "biblical_reference": { "type": "string" },
+                "notes": { "type": "string" }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+
+  // Formatting rules aligned with project_rules.md
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.rulers": [80],
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.wordWrapColumn": 80,
+
+  // Auto-save for seamless MCP integration
+  "files.autoSave": "onFocusChange",
+
+  // Language-specific configurations
+  "[astro]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Extensions recommendations for the project
+  "extensions.recommendations": [
+    "astro-build.astro-vscode",
+    "Vue.volar",
+    "Vue.vscode-typescript-vue-plugin",
+    "GitHub.copilot",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss"
+  ]
+}

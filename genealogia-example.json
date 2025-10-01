@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "title": "Linhagem Bíblica: De Adão a Cristo",
+    "version": "1.0.0",
+    "source": "Bíblia NVT (Nova Versão Transformadora)",
+    "variant": "MT",
+    "description": "Genealogia completa da linhagem principal do Antigo ao Novo Testamento",
+    "last_updated": "2025-10-01",
+    "blocks_count": 4,
+    "total_generations": 62
+  },
+  "blocks": [
+    {
+      "block_name": "Pre-Flood",
+      "description": "De Adão a Noé - Antes do Dilúvio",
+      "color_theme": "#8B4513",
+      "biblical_period": "Antediluvian",
+      "generations": [
+        {
+          "name": "Adão",
+          "generation": 1,
+          "father": null,
+          "mother": null,
+          "age_at_death": 930,
+          "age_when_begat": 130,
+          "birth_year_am": 0,
+          "death_year_am": 930,
+          "biblical_reference": "Gênesis 5:3-5",
+          "notes": "Primeiro homem, criado por Deus",
+          "significance": "Início da humanidade"
+        },
+        {
+          "name": "Sete",
+          "generation": 2,
+          "father": "Adão",
+          "mother": "Eva",
+          "age_at_death": 912,
+          "age_when_begat": 105,
+          "birth_year_am": 130,
+          "death_year_am": 1042,
+          "biblical_reference": "Gênesis 5:6-8",
+          "notes": "Substituto de Abel, linha piedosa",
+          "significance": "Continuidade da linhagem escolhida"
+        }
+      ]
+    },
+    {
+      "block_name": "Post-Flood",
+      "description": "De Noé a Abraão - Após o Dilúvio",
+      "color_theme": "#4682B4",
+      "biblical_period": "Post-Diluvian",
+      "generations": [
+        {
+          "name": "Noé",
+          "generation": 10,
+          "father": "Lameque",
+          "mother": null,
+          "age_at_death": 950,
+          "age_when_begat": 500,
+          "birth_year_am": 1056,
+          "death_year_am": 2006,
+          "biblical_reference": "Gênesis 5:28-32, 9:28-29",
+          "notes": "Construtor da arca, sobrevivente do dilúvio",
+          "significance": "Recomeço da humanidade"
+        }
+      ]
+    },
+    {
+      "block_name": "Monarchy",
+      "description": "De Abraão a Davi - Patriarcas e Reino Unido",
+      "color_theme": "#DAA520",
+      "biblical_period": "Patriarchal/Monarchical",
+      "generations": []
+    },
+    {
+      "block_name": "Exile-Restoration",
+      "description": "De Davi a Jesus - Reino Dividido ao Messias",
+      "color_theme": "#800080",
+      "biblical_period": "Exilic/Post-Exilic",
+      "generations": []
+    }
+  ],
+  "variants": {
+    "MT": {
+      "name": "Texto Massorético",
+      "description": "Texto hebraico tradicional"
+    },
+    "LXX": {
+      "name": "Septuaginta",
+      "description": "Tradução grega (idades diferentes)"
+    }
+  },
+  "biblical_books": [
+    {
+      "name": "Gênesis",
+      "abbreviation": "Gn",
+      "chapters_used": [5, 11],
+      "genealogy_type": "Patriarcal"
+    },
+    {
+      "name": "Mateus",
+      "abbreviation": "Mt",
+      "chapters_used": [1],
+      "genealogy_type": "Messiânica (Abraão a Jesus)"
+    }
+  ]
+}

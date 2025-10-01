@@ -1,0 +1,385 @@
+---
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { 
+  title = "Linhagem Bíblica: De Adão a Cristo",
+  description = "Genealogia completa da linhagem principal de Adão até Jesus Cristo, conectando as eras pré e pós-Dilúvio com a linhagem real em Mateus."
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    
+    <!-- Biblical genealogy specific meta -->
+    <meta name="keywords" content="genealogia bíblica, Adão, Jesus Cristo, linhagem, Gênesis, Mateus, árvore genealógica" />
+    <meta name="author" content="Alex Venceslau" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- Fonts - Biblical/Readable -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/all.min.css">
+    
+    <title>{title}</title>
+  </head>
+  
+  <body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+    
+    <!-- Header with biblical design -->
+    <header class="main-header" role="banner">
+      <div class="header-container">
+        <div class="logo-section">
+          <h1 class="site-title">
+            <span class="title-icon"><i class="fas fa-tree" aria-hidden="true"></i></span>
+            <span class="title-text">Linhagem de Adão</span>
+          </h1>
+          <p class="site-subtitle">De Adão a Cristo • Gênesis a Mateus</p>
+        </div>
+        
+        <nav class="main-nav" role="navigation" aria-label="Navegação principal">
+          <ul class="nav-list">
+            <li><a href="#genealogy" class="nav-link">Genealogia</a></li>
+            <li><a href="#timeline" class="nav-link">Timeline</a></li>
+            <li><a href="#about" class="nav-link">Sobre</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Main content area -->
+    <main id="main-content" class="main-content" role="main">
+      <slot />
+    </main>
+
+    <!-- Footer with biblical verse -->
+    <footer class="main-footer" role="contentinfo">
+      <div class="footer-container">
+        <div class="biblical-quote">
+          <blockquote>
+            "Este é o livro da genealogia de Adão..."
+            <cite>— Gênesis 5:1 (NVT)</cite>
+          </blockquote>
+        </div>
+        
+        <div class="footer-info">
+          <p>&copy; 2025 Alex Venceslau • Projeto Devocional</p>
+          <p class="version-info">Baseado na Nova Versão Transformadora (NVT)</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  /* CSS Custom Properties - Biblical Color Palette */
+  :root {
+    /* Primary Biblical Colors */
+    --color-earth: #8B4513;        /* Pre-Flood (Brown/Earth) */
+    --color-water: #4682B4;        /* Post-Flood (Steel Blue) */
+    --color-gold: #DAA520;         /* Monarchy (Goldenrod) */
+    --color-purple: #800080;       /* Exile-Restoration (Purple) */
+    
+    /* Supporting Colors */
+    --color-cream: #FDF6E3;        /* Background */
+    --color-sand: #F4E4BC;         /* Light accent */
+    --color-olive: #6B8E23;        /* Text accent */
+    --color-stone: #696969;        /* Neutral text */
+    --color-white: #FFFFFF;
+    --color-black: #2F2F2F;
+    
+    /* Typography */
+    --font-serif: 'Crimson Text', Georgia, serif;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Spacing Scale */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+  }
+
+  /* Global Reset & Base Styles */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-cream);
+    color: var(--color-black);
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Skip Link for Accessibility */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 6px;
+    background: var(--color-earth);
+    color: var(--color-white);
+    padding: 8px;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    z-index: 1000;
+    transition: top 0.3s;
+  }
+
+  .skip-link:focus {
+    top: 6px;
+  }
+
+  /* Header Styles */
+  .main-header {
+    background: linear-gradient(135deg, var(--color-earth) 0%, var(--color-olive) 100%);
+    color: var(--color-white);
+    padding: var(--space-md) 0;
+    box-shadow: var(--shadow-md);
+    position: relative;
+  }
+
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+  }
+
+  .logo-section {
+    flex: 1;
+  }
+
+  .site-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 0 0 var(--space-xs) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .title-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+  }
+
+  .site-subtitle {
+    font-size: 0.9rem;
+    margin: 0;
+    opacity: 0.9;
+    font-style: italic;
+  }
+
+  /* Navigation */
+  .main-nav {
+    flex-shrink: 0;
+  }
+
+  .nav-list {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: var(--space-md);
+  }
+
+  .nav-link {
+    color: var(--color-white);
+    text-decoration: none;
+    padding: var(--space-xs) var(--space-sm);
+    border-radius: var(--radius-sm);
+    transition: background-color 0.2s, transform 0.2s;
+    font-weight: 500;
+  }
+
+  .nav-link:hover, .nav-link:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+  }
+
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-xl) var(--space-md);
+    width: 100%;
+  }
+
+  /* Footer */
+  .main-footer {
+    background: var(--color-stone);
+    color: var(--color-cream);
+    padding: var(--space-lg) 0;
+    margin-top: auto;
+  }
+
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+    text-align: center;
+  }
+
+  .biblical-quote {
+    margin-bottom: var(--space-md);
+  }
+
+  .biblical-quote blockquote {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    margin: 0;
+    padding: var(--space-md);
+    border-left: 3px solid var(--color-gold);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+  }
+
+  .biblical-quote cite {
+    display: block;
+    margin-top: var(--space-xs);
+    font-size: 0.9rem;
+    color: var(--color-sand);
+  }
+
+  .footer-info p {
+    margin: var(--space-xs) 0;
+    font-size: 0.9rem;
+  }
+
+  .version-info {
+    opacity: 0.8;
+  }
+
+  /* Responsive Design - Mobile First */
+  @media (max-width: 768px) {
+    .header-container {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .site-title {
+      font-size: 1.5rem;
+      justify-content: center;
+    }
+
+    .title-icon {
+      font-size: 2rem;
+    }
+
+    .nav-list {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--space-sm);
+    }
+
+    .main-content {
+      padding: var(--space-lg) var(--space-sm);
+    }
+
+    .biblical-quote blockquote {
+      padding: var(--space-sm);
+      font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    :root {
+      --space-xl: 2rem;
+      --space-lg: 1.5rem;
+    }
+
+    .site-title {
+      font-size: 1.3rem;
+    }
+
+    .nav-link {
+      padding: var(--space-xs);
+      font-size: 0.9rem;
+    }
+  }
+
+  /* Print Styles */
+  @media print {
+    .main-header, .main-footer {
+      background: none !important;
+      color: black !important;
+      box-shadow: none !important;
+    }
+
+    .skip-link {
+      display: none;
+    }
+
+    .main-content {
+      padding: 1rem 0;
+    }
+  }
+
+  /* High Contrast Mode Support */
+  @media (prefers-contrast: high) {
+    :root {
+      --color-earth: #654321;
+      --color-water: #003366;
+      --color-gold: #B8860B;
+      --color-purple: #4B0082;
+    }
+  }
+
+  /* Reduced Motion Support */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    .nav-link, .skip-link {
+      transition: none;
+    }
+  }
+</style>

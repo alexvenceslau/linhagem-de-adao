@@ -1,0 +1,337 @@
+---
+// Header component with biblical theme and responsive navigation
+---
+
+<header class="biblical-header" role="banner">
+  <div class="container">
+    <div class="header-brand">
+      <h1 class="brand-title">
+        <span class="brand-icon" aria-hidden="true"><i class="fas fa-tree"></i></span>
+        <span class="brand-text">Linhagem de Adão</span>
+      </h1>
+      <p class="brand-tagline">De Adão a Cristo através das Escrituras</p>
+    </div>
+    
+    <nav class="header-nav" role="navigation" aria-label="Menu principal">
+      <button 
+        class="nav-toggle" 
+        aria-controls="nav-menu" 
+        aria-expanded="false"
+        type="button"
+      >
+        <i class="fas fa-bars" aria-hidden="true"></i>
+        <span class="sr-only">Menu</span>
+      </button>
+      
+      <ul class="nav-menu" id="nav-menu">
+        <li class="nav-item">
+          <a href="/" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-home"></i></span>
+            Início
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="/tree" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-sitemap"></i></span>
+            Árvore
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#timeline" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-clock"></i></span>
+            Timeline
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#blocks" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-columns"></i></span>
+            Períodos
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#about" class="nav-link">
+            <span class="nav-icon"><i class="fas fa-info-circle"></i></span>
+            Sobre
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .biblical-header {
+    background: linear-gradient(135deg, #8B4513 0%, #6B8E23 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  /* Brand Section */
+  .header-brand {
+    flex: 1;
+  }
+
+  .brand-title {
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 600;
+    margin: 0 0 0.25rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .brand-icon {
+    font-size: 1.4em;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+  }
+
+  .brand-tagline {
+    font-size: 0.85rem;
+    margin: 0;
+    opacity: 0.9;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Navigation */
+  .header-nav {
+    position: relative;
+  }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+
+  .nav-toggle:hover,
+  .nav-toggle:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
+  }
+
+  .nav-toggle i {
+    font-size: 1.25rem;
+    transition: transform 0.2s;
+  }
+
+  /* Navigation Menu */
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 1.5rem;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .nav-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s;
+  }
+
+  .nav-link:hover::before {
+    left: 100%;
+  }
+
+  .nav-link:hover,
+  .nav-link:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .nav-icon {
+    font-size: 1.1em;
+  }
+
+  /* Screen Reader Only */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* Mobile Responsive */
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-toggle {
+      display: block;
+    }
+
+    .nav-menu {
+      position: absolute;
+      top: calc(100% + 1rem);
+      right: 0;
+      background: #8B4513;
+      flex-direction: column;
+      gap: 0;
+      min-width: 200px;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+
+    .nav-menu[aria-expanded="true"] {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .nav-link {
+      padding: 1rem 1.5rem;
+      border-radius: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .nav-item:last-child .nav-link {
+      border-bottom: none;
+      border-radius: 0 0 8px 8px;
+    }
+
+    .nav-item:first-child .nav-link {
+      border-radius: 8px 8px 0 0;
+    }
+
+    .brand-title {
+      font-size: 1.4rem;
+    }
+
+    .brand-tagline {
+      font-size: 0.8rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .container {
+      padding: 0.75rem;
+      gap: 1rem;
+    }
+
+    .brand-title {
+      font-size: 1.2rem;
+    }
+
+    .nav-icon {
+      font-size: 1em;
+    }
+  }
+
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    .biblical-header {
+      background: #000;
+      border-bottom: 2px solid #fff;
+    }
+    
+    .nav-link:hover,
+    .nav-link:focus {
+      background-color: #fff;
+      color: #000;
+    }
+  }
+
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .nav-link,
+    .nav-menu,
+    .nav-toggle i {
+      transition: none;
+    }
+    
+    .nav-link::before {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  // Mobile navigation toggle
+  document.addEventListener('DOMContentLoaded', function() {
+    const navToggle = document.querySelector('.nav-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', function() {
+        const isExpanded = navToggle.getAttribute('aria-expanded') === 'true';
+        
+        navToggle.setAttribute('aria-expanded', !isExpanded);
+        navMenu.setAttribute('aria-expanded', !isExpanded);
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', function(e) {
+        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+          navToggle.setAttribute('aria-expanded', 'false');
+          navMenu.setAttribute('aria-expanded', 'false');
+        }
+      });
+      
+      // Close menu when pressing Escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          navToggle.setAttribute('aria-expanded', 'false');
+          navMenu.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  });
+</script>

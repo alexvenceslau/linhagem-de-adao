@@ -1,0 +1,293 @@
+# PRD - Linhagem Bíblica: De Adão a Cristo
+**Product Requirements Document v1.0**
+
+---
+
+## 1. VISÃO GERAL DO PRODUTO
+
+### 1.1 Resumo Executivo
+Aplicação web interativa que visualiza a genealogia bíblica completa desde Adão até Jesus Cristo, integrando dados do Antigo e Novo Testamento em uma experiência visual educativa e devocional.
+
+### 1.2 Problema a Resolver
+- **Fragmentação**: Genealogias bíblicas estão dispersas em múltiplos livros (Gênesis, Mateus, Lucas)
+- **Complexidade**: Idades, nomes e variantes textuais confundem leitores iniciantes
+- **Desconexão**: Falta de visualização da continuidade histórica de Adão a Cristo
+- **Engajamento**: Textos estáticos não promovem exploração interativa
+
+### 1.3 Objetivos do Produto
+**Principal**: Criar ferramenta visual que conecte narrativas bíblicas (criação → Messias)
+**Secundários**:
+- Facilitar estudos devocionais e compreensão teológica
+- Suportar comparações de linhagens e variantes textuais
+- Promover reflexão sobre fidelidade divina através das gerações
+
+---
+
+## 2. PÚBLICO-ALVO
+
+### 2.1 Personas Primárias
+
+**Iniciante Devocional** (25-40 anos)
+- Necessidades: Conexões simples entre AT e NT
+- Dores: Sobrecarga de informação textual
+- Delícias: Insights rápidos e visuais
+
+**Estudioso Casual** (30-50 anos)  
+- Necessidades: Comparações entre variantes (MT vs LXX)
+- Dores: Mapeamento manual entre fontes
+- Delícias: Menu acadêmico com opções detalhadas
+
+**Familiar** (35-55 anos)
+- Necessidades: Interface mobile para grupos familiares
+- Dores: Conteúdo muito técnico/seco
+- Delícias: Timeline interativa e visual
+
+### 2.2 Casos de Uso
+1. **Estudo devocional pessoal**: Explorar linhagem durante leitura bíblica
+2. **Ensino familiar**: Mostrar continuidade histórica para filhos
+3. **Pesquisa acadêmica**: Comparar variantes textuais e cronologias
+4. **Grupos de estudo**: Ferramenta visual para discussões
+
+---
+
+## 3. ESCOPO E FUNCIONALIDADES
+
+### 3.1 In-Scope (MVP)
+
+#### 3.1.1 Dados
+- **62 gerações** organizadas em 4 blocos temáticos:
+  - Pré-Dilúvio (Adão → Noé)
+  - Pós-Dilúvio (Noé → Abraão)  
+  - Monarquia (Abraão → Davi)
+  - Exílio-Restauração (Davi → Jesus)
+- **Fonte primária**: Bíblia NVT (Nova Versão Transformadora)
+- **Metadados**: nomes, idades, pais/mães, referências bíblicas, notas
+
+#### 3.1.2 Interface
+- **Árvore interativa** com blocos coloridos por período
+- **Menu dropdown** para seleções:
+  - Versão bíblica (Mateus vs Lucas)
+  - Idioma (PT-BR default)
+  - Variante textual (MT vs LXX)
+- **Tooltips** com versos bíblicos e significados
+- **Timeline visual** com marcos históricos
+
+#### 3.1.3 Experiência
+- **Carregamento rápido** (<2s via Astro estático)
+- **Mobile-first** responsivo
+- **Acessibilidade** (ARIA, contraste adequado)
+- **Temas visuais** (cores bíblicas: terra, azul, dourado)
+
+### 3.2 Out-of-Scope (MVP)
+- Backend/APIs dinâmicos
+- Autenticação de usuários
+- Recursos de áudio/vídeo
+- Linhagens secundárias completas
+- Cálculos cronológicos automáticos
+- Funcionalidades de quiz/gamificação
+
+### 3.3 Funcionalidades Futuras
+- **Expansão de idiomas** (EN, ES)
+- **Integração devocional** (planos de leitura)
+- **Export PDF** para impressão
+- **Modo offline** com PWA
+- **Variantes adicionais** (Vulgata, Peshitta)
+
+---
+
+## 4. ESPECIFICAÇÕES TÉCNICAS
+
+### 4.1 Arquitetura
+**Stack**: Astro + Vue.js + TypeScript + JSON
+- **Frontend**: Astro (páginas estáticas) + Vue islands (interatividade)
+- **Dados**: JSON puro (`genealogia-completa-nvt.json`)
+- **Build**: Vite + TypeScript
+- **Deploy**: Cloudflare Pages
+- **Sem backend**: 100% estático
+
+### 4.2 Performance
+- **Tamanho total**: <1MB (JSON ~5KB, assets leves)
+- **TTI (Time to Interactive)**: <100ms (otimização Astro)
+- **Compatibilidade**: Browsers modernos (ES6+)
+- **Mobile**: Performance 95+ no Lighthouse
+
+### 4.3 Estrutura de Dados
+```typescript
+interface GenealogyData {
+  metadata: {
+    title: string;
+    version: string;
+    source: string;
+    variant: 'MT' | 'LXX';
+    total_generations: number;
+  };
+  blocks: GenealogyBlock[];
+  variants: Record<string, VariantInfo>;
+}
+
+interface GenealogyBlock {
+  block_name: string;
+  description: string;
+  color_theme: string;
+  generations: Person[];
+}
+
+interface Person {
+  name: string;
+  generation: number;
+  father?: string;
+  mother?: string;
+  age_at_death?: number;
+  biblical_reference: string;
+  notes?: string;
+}
+```
+
+---
+
+## 5. EXPERIÊNCIA DO USUÁRIO
+
+### 5.1 Jornada do Usuário
+1. **Landing**: Citação acolhedora (Gn 5:1)
+2. **Exploração**: Navegação intuitiva na árvore
+3. **Descoberta**: Tooltips revelam detalhes bíblicos
+4. **Personalização**: Menu permite customização
+5. **Reflexão**: Notas teológicas inspiram devoção
+6. **Saída**: Links para recursos devocionais
+
+### 5.2 Princípios de UX
+- **Simplicidade**: Interface limpa, hierarquia visual clara
+- **Serenidade**: Paleta calma (tons terrosos/bíblicos)
+- **Acessibilidade**: ARIA completo, navegação por teclado
+- **Responsividade**: Mobile-first design
+
+### 5.3 Interações Principais
+- **Hover**: Revela tooltip com versículo e contexto
+- **Click**: Expande detalhes da pessoa (modal/sidebar)
+- **Menu**: Altera visualização (Mateus ↔ Lucas, MT ↔ LXX)
+- **Busca**: Localiza pessoa específica na árvore
+- **Zoom**: Navega em seções da timeline
+
+---
+
+## 6. CRITÉRIOS DE SUCESSO
+
+### 6.1 Métricas Quantitativas
+- **Performance**: Lighthouse Score >90 em todas as categorias
+- **Carregamento**: TTI <100ms, FCP <1s
+- **Tamanho**: Bundle total <1MB
+- **Compatibilidade**: Funciona em 95%+ browsers modernos
+- **Acessibilidade**: WCAG 2.1 AA compliance
+
+### 6.2 Métricas Qualitativas
+- **Usabilidade**: Usuário consegue navegar sem tutorial
+- **Engajamento**: >80% exploram pelo menos 3 blocos
+- **Compreensão**: Usuários conseguem explicar conexão AT-NT
+- **Satisfação**: Feedback positivo sobre valor devocional
+
+### 6.3 Critérios de Aceitação
+**Must-Have (Lançamento)**:
+- ✅ Árvore renderiza todas as 62 gerações
+- ✅ Menu funciona (alternar Mateus/Lucas)  
+- ✅ Tooltips mostram referências bíblicas
+- ✅ Interface responsiva (mobile + desktop)
+- ✅ Carregamento <2s em 3G
+
+**Should-Have (Pós-MVP)**:
+- Busca por nome funcional
+- Export/compartilhamento
+- Modo escuro opcional
+
+**Could-Have (Futuro)**:
+- Múltiplos idiomas
+- Integração com apps devocionais
+- Funcionalidades offline
+
+---
+
+## 7. CRONOGRAMA E ENTREGAS
+
+### 7.1 Fase 1: Fundação (Semana 1-2)
+- Setup Astro + Vue + TypeScript
+- Estrutura de dados JSON finalizada
+- Componentes base (layout, menu)
+- **Entrega**: Protótipo navegável
+
+### 7.2 Fase 2: Core Features (Semana 3-4)
+- Árvore genealógica interativa  
+- Sistema de tooltips
+- Menu dropdown funcional
+- **Entrega**: MVP funcional
+
+### 7.3 Fase 3: Polish & Deploy (Semana 5)
+- Responsividade mobile
+- Performance optimization
+- Deploy Cloudflare Pages
+- **Entrega**: Produto em produção
+
+### 7.4 Fase 4: Iteração (Ongoing)
+- Feedback de usuários
+- Melhorias de UX
+- Features adicionais
+- **Entrega**: Versões incrementais
+
+---
+
+## 8. RISCOS E MITIGAÇÕES
+
+### 8.1 Riscos Técnicos
+**Risco**: Performance com 62 elementos na árvore
+**Mitigação**: Lazy loading, virtualização de componentes
+
+**Risco**: Complexidade da visualização hierárquica
+**Mitigação**: Usar bibliotecas testadas (Vue Flow, D3.js)
+
+### 8.2 Riscos de UX
+**Risco**: Sobrecarga de informação
+**Mitigação**: Progressive disclosure, tooltips opcionais
+
+**Risco**: Confusão entre variantes (Mateus vs Lucas)
+**Mitigação**: UI clara, labels explicativos
+
+### 8.3 Riscos de Conteúdo
+**Risco**: Precisão das referências bíblicas
+**Mitigação**: Revisão com especialistas, fontes múltiplas
+
+**Risco**: Sensibilidades teológicas
+**Mitigação**: Foco nos dados bíblicos, evitar interpretações controversas
+
+---
+
+## 9. DEPENDÊNCIAS
+
+### 9.1 Técnicas
+- Astro framework (v4.x)
+- Vue.js (v3.x) 
+- TypeScript (v5.x)
+- Vite build system
+- Cloudflare Pages hosting
+
+### 9.2 Conteúdo
+- Bíblia NVT digitalizada
+- Revisão teológica do conteúdo
+- Validação das referências bíblicas
+
+### 9.3 Design
+- Paleta de cores definida
+- Iconografia bíblica/histórica
+- Tipografia legível e acessível
+
+---
+
+## 10. APROVAÇÕES
+
+**Product Owner**: Alex Venceslau
+**Tech Lead**: Alex Venceslau  
+**Data**: 01/10/2025
+**Versão**: 1.0
+
+**Status**: ✅ Aprovado para desenvolvimento
+
+---
+
+*Este PRD é um documento vivo e será atualizado conforme o projeto evolui. Para dúvidas ou mudanças, consulte o repositório GitHub: linhagem-de-adao*

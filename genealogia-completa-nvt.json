@@ -1,0 +1,534 @@
+{
+  "title": "Linhagem Bíblica: De Adão a Jesus (Gênesis 5, 11 + Mateus 1, NVT)",
+  "version": "NVT",
+  "language": "pt-BR",
+  "source": "Gênesis 5:1-32; 11:10-32; Mateus 1:1-17",
+  "description": "Genealogia completa da linhagem principal de Adão até Jesus Cristo, conectando as eras pré e pós-Dilúvio com a linhagem real em Mateus. Organizada em blocos para facilitar a visualização.",
+  "totalGenerations": 62,
+  "blocks": [
+    {
+      "name": "Bloco Pré-Dilúvio: De Adão a Noé",
+      "generations": 10,
+      "entries": [
+        {
+          "verse": "5:3",
+          "father": null,
+          "name": "Adão",
+          "age_at_son": 130,
+          "years_after": 800,
+          "total": 930,
+          "mother": null,
+          "notes": "Primeiro homem, criado à imagem de Deus (Gn 1:27)."
+        },
+        {
+          "verse": "5:6",
+          "father": "Adão",
+          "name": "Sete",
+          "age_at_son": 105,
+          "years_after": 807,
+          "total": 912,
+          "mother": null,
+          "notes": "Filho da esperança, substituto de Abel."
+        },
+        {
+          "verse": "5:9",
+          "father": "Sete",
+          "name": "Enos",
+          "age_at_son": 90,
+          "years_after": 815,
+          "total": 905,
+          "mother": null,
+          "notes": "Época em que os homens começaram a invocar o nome do Senhor (Gn 4:26)."
+        },
+        {
+          "verse": "5:12",
+          "father": "Enos",
+          "name": "Quenan",
+          "age_at_son": 70,
+          "years_after": 840,
+          "total": 910,
+          "mother": null,
+          "notes": "Parte da linhagem fiel."
+        },
+        {
+          "verse": "5:15",
+          "father": "Quenan",
+          "name": "Malael",
+          "age_at_son": 65,
+          "years_after": 830,
+          "total": 895,
+          "mother": null,
+          "notes": "Nome significa 'louvor de Deus'."
+        },
+        {
+          "verse": "5:18",
+          "father": "Malael",
+          "name": "Jared",
+          "age_at_son": 162,
+          "years_after": 800,
+          "total": 962,
+          "mother": null,
+          "notes": "Pai de Enoque."
+        },
+        {
+          "verse": "5:21",
+          "father": "Jared",
+          "name": "Enoque",
+          "age_at_son": 65,
+          "years_after": 300,
+          "total": 365,
+          "mother": null,
+          "notes": "Andou com Deus e foi levado por Ele, sem ver a morte (Gn 5:24)."
+        },
+        {
+          "verse": "5:25",
+          "father": "Enoque",
+          "name": "Matusalém",
+          "age_at_son": 187,
+          "years_after": 782,
+          "total": 969,
+          "mother": null,
+          "notes": "O homem mais velho registrado na Bíblia; morreu no ano do Dilúvio."
+        },
+        {
+          "verse": "5:28",
+          "father": "Matusalém",
+          "name": "Lameque",
+          "age_at_son": 182,
+          "years_after": 595,
+          "total": 777,
+          "mother": null,
+          "notes": "Pai de Noé; nome de Noé significa 'alívio'."
+        },
+        {
+          "verse": "5:32",
+          "father": "Lameque",
+          "name": "Noé",
+          "age_at_son": 500,
+          "years_after": 450,
+          "total": 950,
+          "mother": null,
+          "notes": "Construtor da arca; salvou a humanidade e os animais do Dilúvio (Gn 6-9)."
+        }
+      ]
+    },
+    {
+      "name": "Bloco Pós-Dilúvio: De Noé a Abraão",
+      "generations": 10,
+      "entries": [
+        {
+          "verse": "11:10",
+          "father": "Noé",
+          "name": "Sem",
+          "age_at_son": 100,
+          "years_after": 500,
+          "total": 600,
+          "mother": null,
+          "notes": "Filho mais velho de Noé; ancestral dos semitas."
+        },
+        {
+          "verse": "11:12",
+          "father": "Sem",
+          "name": "Arfaxade",
+          "age_at_son": 35,
+          "years_after": 403,
+          "total": 438,
+          "mother": null,
+          "notes": "Nascido dois anos após o Dilúvio."
+        },
+        {
+          "verse": "11:14",
+          "father": "Arfaxade",
+          "name": "Salá",
+          "age_at_son": 30,
+          "years_after": 403,
+          "total": 433,
+          "mother": null,
+          "notes": "Parte da linhagem descendente."
+        },
+        {
+          "verse": "11:16",
+          "father": "Salá",
+          "name": "Héber",
+          "age_at_son": 34,
+          "years_after": 430,
+          "total": 464,
+          "mother": null,
+          "notes": "Nome relacionado à origem dos hebreus."
+        },
+        {
+          "verse": "11:18",
+          "father": "Héber",
+          "name": "Pelegue",
+          "age_at_son": 30,
+          "years_after": 209,
+          "total": 239,
+          "mother": null,
+          "notes": "Nome significa \"divisão\", pois \"a terra foi dividida\" em seus dias (Gn 10:25)."
+        },
+        {
+          "verse": "11:20",
+          "father": "Pelegue",
+          "name": "Reú",
+          "age_at_son": 32,
+          "years_after": 207,
+          "total": 239,
+          "mother": null,
+          "notes": "Avô de Naor."
+        },
+        {
+          "verse": "11:22",
+          "father": "Reú",
+          "name": "Serugue",
+          "age_at_son": 30,
+          "years_after": 200,
+          "total": 230,
+          "mother": null,
+          "notes": "Pai de Naor."
+        },
+        {
+          "verse": "11:24",
+          "father": "Serugue",
+          "name": "Naor",
+          "age_at_son": 29,
+          "years_after": 119,
+          "total": 148,
+          "mother": null,
+          "notes": "Avô de Abraão."
+        },
+        {
+          "verse": "11:26",
+          "father": "Naor",
+          "name": "Terá",
+          "age_at_son": 70,
+          "years_after": 135,
+          "total": 205,
+          "mother": null,
+          "notes": "Pai de Abrão, Naor e Harã; migrou para Harã."
+        },
+        {
+          "verse": "11:27",
+          "father": "Terá",
+          "name": "Abrão",
+          "age_at_son": null,
+          "years_after": null,
+          "total": 175,
+          "mother": null,
+          "notes": "Mais tarde chamado Abraão; pai das nações (Gn 17:5)."
+        }
+      ]
+    },
+    {
+      "name": "Bloco 1: De Abraão a Davi",
+      "generations": 14,
+      "entries": [
+        {
+          "verse": 2,
+          "father": "Terá",
+          "name": "Abraão",
+          "mother": null,
+          "notes": "Ancestral da promessa; pai da fé (Gn 12)."
+        },
+        {
+          "verse": 2,
+          "father": "Abraão",
+          "name": "Isaque",
+          "mother": null,
+          "notes": "Filho da promessa (Gn 21)."
+        },
+        {
+          "verse": 2,
+          "father": "Isaque",
+          "name": "Jacó",
+          "mother": null,
+          "notes": "Israel, pai das 12 tribos (Gn 25)."
+        },
+        {
+          "verse": 2,
+          "father": "Jacó",
+          "name": "Judá",
+          "mother": null,
+          "notes": "Ancestral da tribo real (Gn 49:10)."
+        },
+        {
+          "verse": 3,
+          "father": "Judá",
+          "name": "Perez",
+          "mother": "Tamar",
+          "notes": "Nascido de gêmeos; Tamar mencionada por graça redentora."
+        },
+        {
+          "verse": 3,
+          "father": "Perez",
+          "name": "Esrom",
+          "mother": null,
+          "notes": "Parte da linhagem de Judá."
+        },
+        {
+          "verse": 3,
+          "father": "Esrom",
+          "name": "Rão",
+          "mother": null,
+          "notes": "Avô de Naassom."
+        },
+        {
+          "verse": 4,
+          "father": "Rão",
+          "name": "Aminadabe",
+          "mother": null,
+          "notes": "Líder da tribo de Judá."
+        },
+        {
+          "verse": 4,
+          "father": "Aminadabe",
+          "name": "Naassom",
+          "mother": null,
+          "notes": "Príncipe durante o Êxodo."
+        },
+        {
+          "verse": 4,
+          "father": "Naassom",
+          "name": "Salmom",
+          "mother": null,
+          "notes": "Pai de Boaz."
+        },
+        {
+          "verse": 5,
+          "father": "Salmom",
+          "name": "Boaz",
+          "mother": "Raabe",
+          "notes": "Redentor de Rute; Raabe era de Jericó."
+        },
+        {
+          "verse": 5,
+          "father": "Boaz",
+          "name": "Obede",
+          "mother": "Rute",
+          "notes": "Filho de Rute, a moabita; símbolo de redenção."
+        },
+        {
+          "verse": 5,
+          "father": "Obede",
+          "name": "Jessé",
+          "mother": null,
+          "notes": "Pai de Davi."
+        },
+        {
+          "verse": 6,
+          "father": "Jessé",
+          "name": "Davi",
+          "mother": null,
+          "notes": "Rei de Israel; o Ungido."
+        }
+      ]
+    },
+    {
+      "name": "Bloco 2: De Davi ao Exílio na Babilônia",
+      "generations": 14,
+      "entries": [
+        {
+          "verse": 6,
+          "father": "Davi",
+          "name": "Salomão",
+          "mother": "Bate-Seba (viúva de Urias)",
+          "notes": "Rei sábio; sucessor de Davi."
+        },
+        {
+          "verse": 7,
+          "father": "Salomão",
+          "name": "Roboão",
+          "mother": null,
+          "notes": "Rei de Judá após divisão do reino."
+        },
+        {
+          "verse": 7,
+          "father": "Roboão",
+          "name": "Abias",
+          "mother": null,
+          "notes": "Rei de Judá."
+        },
+        {
+          "verse": 7,
+          "father": "Abias",
+          "name": "Asa",
+          "mother": null,
+          "notes": "Rei reformador."
+        },
+        {
+          "verse": 8,
+          "father": "Asa",
+          "name": "Josafá",
+          "mother": null,
+          "notes": "Rei piedoso."
+        },
+        {
+          "verse": 8,
+          "father": "Josafá",
+          "name": "Jeorão",
+          "mother": null,
+          "notes": "Rei ímpio."
+        },
+        {
+          "verse": 8,
+          "father": "Jeorão",
+          "name": "Uzias",
+          "mother": null,
+          "notes": "Também chamado Azarias; próspero mas leproso."
+        },
+        {
+          "verse": 9,
+          "father": "Uzias",
+          "name": "Jotão",
+          "mother": null,
+          "notes": "Rei justo."
+        },
+        {
+          "verse": 9,
+          "father": "Jotão",
+          "name": "Acaz",
+          "mother": null,
+          "notes": "Rei idólatra."
+        },
+        {
+          "verse": 9,
+          "father": "Acaz",
+          "name": "Ezequias",
+          "mother": null,
+          "notes": "Rei reformador; orou por livramento."
+        },
+        {
+          "verse": 10,
+          "father": "Ezequias",
+          "name": "Manassés",
+          "mother": null,
+          "notes": "Rei arrependido após cativeiro."
+        },
+        {
+          "verse": 10,
+          "father": "Manassés",
+          "name": "Amom",
+          "mother": null,
+          "notes": "Rei mau, assassinado."
+        },
+        {
+          "verse": 10,
+          "father": "Amom",
+          "name": "Josias",
+          "mother": null,
+          "notes": "Rei reformador; encontrou o livro da Lei."
+        },
+        {
+          "verse": 11,
+          "father": "Josias",
+          "name": "Joaquim",
+          "mother": null,
+          "notes": "Nascido no tempo do exílio; também chamado Jeconias."
+        }
+      ]
+    },
+    {
+      "name": "Bloco 3: Do Exílio na Babilônia a Cristo",
+      "generations": 14,
+      "entries": [
+        {
+          "verse": 12,
+          "father": "Joaquim",
+          "name": "Salatiel",
+          "mother": null,
+          "notes": "Pós-exílio na Babilônia."
+        },
+        {
+          "verse": 12,
+          "father": "Salatiel",
+          "name": "Zorobabel",
+          "mother": null,
+          "notes": "Governador; líder do retorno."
+        },
+        {
+          "verse": 13,
+          "father": "Zorobabel",
+          "name": "Abiúde",
+          "mother": null,
+          "notes": "Parte da linhagem pós-exílio."
+        },
+        {
+          "verse": 13,
+          "father": "Abiúde",
+          "name": "Eliaquim",
+          "mother": null,
+          "notes": "-"
+        },
+        {
+          "verse": 13,
+          "father": "Eliaquim",
+          "name": "Azor",
+          "mother": null,
+          "notes": "-"
+        },
+        {
+          "verse": 14,
+          "father": "Azor",
+          "name": "Sadoque",
+          "mother": null,
+          "notes": "-"
+        },
+        {
+          "verse": 14,
+          "father": "Sadoque",
+          "name": "Aquim",
+          "mother": null,
+          "notes": "-"
+        },
+        {
+          "verse": 14,
+          "father": "Aquim",
+          "name": "Eliúde",
+          "mother": null,
+          "notes": "-"
+        },
+        {
+          "verse": 15,
+          "father": "Eliúde",
+          "name": "Eleazar",
+          "mother": null,
+          "notes": "-"
+        },
+        {
+          "verse": 15,
+          "father": "Eleazar",
+          "name": "Matã",
+          "mother": null,
+          "notes": "-"
+        },
+        {
+          "verse": 15,
+          "father": "Matã",
+          "name": "Jacó",
+          "mother": null,
+          "notes": "-"
+        },
+        {
+          "verse": 16,
+          "father": "Jacó",
+          "name": "José",
+          "mother": null,
+          "notes": "Marido de Maria; pai legal de Jesus."
+        },
+        {
+          "verse": 16,
+          "father": "José",
+          "name": "Jesus",
+          "mother": "Maria",
+          "notes": "O Cristo, Filho de Deus."
+        }
+      ]
+    }
+  ],
+  "summary": "Assim, todas as gerações se conectam: da criação em Adão, através do Dilúvio com Noé, à promessa com Abraão, e culminando na vinda de Cristo (Mt 1:17, adaptado).",
+  "extension": {
+    "variants": {
+      "lucas": "Lucas 3:23-38 oferece uma linhagem paralela via Maria, com 77 gerações reversas de Jesus a Adão.",
+      "cronologia": "Use os campos age_at_son e total para calcular timelines (ex.: MT vs. LXX)."
+    }
+  }
+}

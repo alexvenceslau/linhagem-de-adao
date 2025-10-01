@@ -1,0 +1,499 @@
+---
+// Import genealogy data and layout
+import Layout from '../layouts/Layout.astro';
+import genealogyData from '../../../genealogia-completa-nvt.json';
+import type { GenealogyData } from '../types/genealogy';
+import { getBlockThemeColor, getTotalPeople } from '../types/genealogy';
+
+// Cast the imported JSON to our TypeScript interface
+const data = genealogyData as GenealogyData;
+const totalPeople = getTotalPeople(data);
+
+// Function to get Font Awesome icons for each genealogical block
+function getBlockIcon(blockName: string): string {
+  const iconMap: Record<string, string> = {
+    'Pré-Dilúvio (Adão a Noé)': 'fas fa-seedling',
+    'Pós-Dilúvio (Noé a Abraão)': 'fas fa-ship', 
+    'Patriarcas (Abraão a Davi)': 'fas fa-crown',
+    'Reis (Davi ao Exílio)': 'fas fa-chess-king',
+    'Pós-Exílio (até Cristo)': 'fas fa-star'
+  };
+  
+  return iconMap[blockName] || 'fas fa-users';
+}
+---
+
+<Layout title={data.title} description={data.description}>
+  <!-- Welcome Section -->
+  <section class="welcome-section" role="banner">
+    <div class="welcome-content">
+      <h2 class="welcome-title"><i class="fas fa-scroll"></i> Bem-vindo à Linhagem Bíblica</h2>
+      <p class="welcome-text">
+        Explore a genealogia completa desde Adão até Jesus Cristo, 
+        conectando as narrativas do Antigo e Novo Testamento em uma jornada visual inspiradora.
+      </p>
+      <div class="biblical-reference">
+        <blockquote>
+          "Este é o livro da genealogia de Adão..."
+          <cite>Gênesis 5:1 (NVT)</cite>
+        </blockquote>
+      </div>
+      
+      <!-- Call to Action -->
+      <div class="cta-section">
+        <a href="/tree" class="cta-button">
+          <i class="fas fa-sitemap"></i>
+          Explorar Árvore Genealógica Interativa
+        </a>
+        <p class="cta-description">
+          Visualize as conexões familiares através de uma interface interativa
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Statistics Overview -->
+  <section class="stats-section" id="genealogy" role="region" aria-labelledby="stats-title">
+    <h2 id="stats-title" class="section-title"><i class="fas fa-chart-bar"></i> Visão Geral da Genealogia</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-sitemap"></i></div>
+        <div class="stat-number">{data.totalGenerations}</div>
+        <div class="stat-label">Gerações Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-number">{totalPeople}</div>
+        <div class="stat-label">Pessoas Registradas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-layer-group"></i></div>
+        <div class="stat-number">{data.blocks.length}</div>
+        <div class="stat-label">Blocos Temáticos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-book-open"></i></div>
+        <div class="stat-number">{data.version}</div>
+        <div class="stat-label">Versão Bíblica</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Genealogy Blocks -->
+  <section class="blocks-section" id="blocks" role="region" aria-labelledby="blocks-title">
+    <h2 id="blocks-title" class="section-title"><i class="fas fa-layer-group"></i> Blocos Genealógicos</h2>
+    <div class="blocks-grid">
+      {data.blocks.map((block, index) => {
+        const themeColor = getBlockThemeColor(block.name);
+        return (
+          <article class="block-card" style={`border-left-color: ${themeColor}`}>
+            <header class="block-header">
+              <h3 class="block-title" style={`color: ${themeColor}`}>
+                <i class={getBlockIcon(block.name)} aria-hidden="true"></i>
+                {block.name}
+              </h3>
+              <div class="block-stats">
+                <span class="block-count">{block.generations} gerações</span>
+                <span class="block-entries">{block.entries.length} registros</span>
+              </div>
+            </header>
+            
+            <div class="block-content">
+              <details class="block-details">
+                <summary class="block-summary">
+                  Ver primeiras pessoas deste período
+                  <span class="expand-icon" aria-hidden="true"><i class="fas fa-chevron-down"></i></span>
+                </summary>
+                <ul class="people-list" role="list">
+                  {block.entries.slice(0, 5).map(person => (
+                    <li class="person-item" role="listitem">
+                      <div class="person-main">
+                        <strong class="person-name">{person.name}</strong>
+                        {person.father && (
+                          <span class="person-relation">filho de {person.father}</span>
+                        )}
+                      </div>
+                      {person.total && (
+                        <div class="person-life">viveu {person.total} anos</div>
+                      )}
+                      {person.verse && (
+                        <div class="person-reference">
+                          <cite>Referência: Gênesis {person.verse}</cite>
+                        </div>
+                      )}
+                      {person.notes && (
+                        <div class="person-notes">
+                          <em>{person.notes}</em>
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              </details>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Source Information -->
+  <section class="source-section" id="about" role="region" aria-labelledby="source-title">
+    <h2 id="source-title" class="section-title"><i class="fas fa-book"></i> Fonte e Metodologia</h2>
+    <div class="source-content">
+      <div class="source-info">
+        <h3>Fontes Bíblicas</h3>
+        <p><strong>{data.source}</strong></p>
+        <p>Esta genealogia baseia-se na Nova Versão Transformadora (NVT), 
+        conectando as linhagens do Antigo Testamento com a genealogia messiânica de Mateus.</p>
+      </div>
+      
+      <div class="methodology">
+        <h3>Organização</h3>
+        <ul>
+          <li><strong>Pré-Dilúvio:</strong> De Adão até Noé (Gênesis 5)</li>
+          <li><strong>Pós-Dilúvio:</strong> De Noé até Abraão (Gênesis 11)</li>
+          <li><strong>Linhagem Real:</strong> De Abraão até Jesus (Mateus 1)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Welcome Section */
+  .welcome-section {
+    background: linear-gradient(135deg, #FDF6E3 0%, #F4E4BC 100%);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
+  .welcome-title {
+    font-family: 'Crimson Text', serif;
+    font-size: 2.5rem;
+    color: #8B4513;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+  }
+
+  .welcome-text {
+    font-size: 1.2rem;
+    color: #2F2F2F;
+    max-width: 600px;
+    margin: 0 auto 2rem auto;
+    line-height: 1.7;
+  }
+
+  .biblical-reference blockquote {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #6B8E23;
+    margin: 0;
+    padding: 1rem 2rem;
+    border-left: 4px solid #DAA520;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+  }
+
+  .biblical-reference cite {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: #696969;
+  }
+
+  .cta-section {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .cta-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #4682B4 0%, #1e3a8a 100%);
+    color: white;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 16px rgba(70, 130, 180, 0.3);
+    transition: all 0.3s ease;
+    margin-bottom: 1rem;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(70, 130, 180, 0.4);
+    background: linear-gradient(135deg, #1e3a8a 0%, #4682B4 100%);
+  }
+
+  .cta-button i {
+    font-size: 1.2rem;
+  }
+
+  .cta-description {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.9rem;
+  }
+
+  /* Stats Section */
+  .stats-section {
+    margin-bottom: 3rem;
+  }
+
+  .section-title {
+    font-family: 'Crimson Text', serif;
+    font-size: 2rem;
+    color: #8B4513;
+    text-align: center;
+    margin: 0 0 2rem 0;
+    font-weight: 600;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-card {
+    background: white;
+    padding: 2rem 1.5rem;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #DAA520;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .stat-icon {
+    font-size: 2rem;
+    color: #4682B4;
+    margin-bottom: 1rem;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #8B4513;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-label {
+    font-size: 1rem;
+    color: #696969;
+    font-weight: 500;
+  }
+
+  /* Blocks Section */
+  .blocks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+  }
+
+  .block-card {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-left: 6px solid #8B4513;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .block-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+  }
+
+  .block-header {
+    margin-bottom: 1rem;
+  }
+
+  .block-title {
+    font-family: 'Crimson Text', serif;
+    font-size: 1.4rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+  }
+
+  .block-stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #696969;
+  }
+
+  .block-details {
+    margin-top: 1rem;
+  }
+
+  .block-summary {
+    cursor: pointer;
+    font-weight: 500;
+    color: #4682B4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-radius: 4px;
+    transition: color 0.2s;
+  }
+
+  .block-summary:hover {
+    color: #8B4513;
+  }
+
+  .expand-icon {
+    transition: transform 0.2s;
+  }
+
+  .block-details[open] .expand-icon {
+    transform: rotate(180deg);
+  }
+
+  .people-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0 0 0;
+  }
+
+  .person-item {
+    padding: 1rem;
+    margin: 0.5rem 0;
+    background: #FDF6E3;
+    border-radius: 8px;
+    border-left: 3px solid #DAA520;
+  }
+
+  .person-main {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .person-name {
+    color: #8B4513;
+    font-size: 1.1rem;
+  }
+
+  .person-relation {
+    color: #696969;
+    font-size: 0.9rem;
+  }
+
+  .person-life,
+  .person-reference,
+  .person-notes {
+    font-size: 0.85rem;
+    margin: 0.25rem 0;
+    color: #696969;
+  }
+
+  .person-notes {
+    font-style: italic;
+    color: #6B8E23;
+  }
+
+  /* Source Section */
+  .source-section {
+    background: linear-gradient(135deg, #F4E4BC 0%, #FDF6E3 100%);
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    margin-top: 3rem;
+  }
+
+  .source-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+
+  .source-info h3,
+  .methodology h3 {
+    color: #8B4513;
+    font-family: 'Crimson Text', serif;
+    font-size: 1.3rem;
+    margin: 0 0 1rem 0;
+  }
+
+  .methodology ul {
+    padding-left: 1.5rem;
+  }
+
+  .methodology li {
+    margin: 0.5rem 0;
+    line-height: 1.6;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .welcome-section {
+      padding: 2rem 1rem;
+    }
+
+    .welcome-title {
+      font-size: 2rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .blocks-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .person-main {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stat-card {
+      padding: 1.5rem 1rem;
+    }
+
+    .block-card {
+      padding: 1rem;
+    }
+  }
+
+  /* Font Awesome icon styling */
+  .fas, .far, .fab {
+    margin-right: 0.5rem;
+  }
+
+  .section-title i,
+  .welcome-title i,
+  .block-title i {
+    margin-right: 0.75rem;
+  }
+
+  .expand-icon i,
+  .stat-icon i {
+    margin-right: 0;
+  }
+</style>
+
