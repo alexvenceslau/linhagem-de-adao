@@ -1,0 +1,158 @@
+---
+title: "Dropdown Test - Linhagem de Adão"
+description: "Teste do componente de seleção de versões, idiomas e blocos"
+---
+
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="/node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 2rem;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+    }
+
+    .test-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      padding: 2rem;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid #8B4513;
+    }
+
+    .header h1 {
+      color: #8B4513;
+      margin: 0 0 0.5rem;
+      font-size: 2rem;
+    }
+
+    .header p {
+      color: #666;
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    .selection-display {
+      background: #f8f9fa;
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-top: 2rem;
+      border-left: 4px solid #8B4513;
+    }
+
+    .selection-display h3 {
+      color: #8B4513;
+      margin-top: 0;
+    }
+
+    .selection-item {
+      display: flex;
+      align-items: center;
+      margin: 0.75rem 0;
+      padding: 0.5rem;
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #e9ecef;
+    }
+
+    .selection-item i {
+      color: #8B4513;
+      width: 20px;
+      margin-right: 1rem;
+    }
+
+    .selection-item strong {
+      color: #495057;
+      margin-right: 0.5rem;
+      min-width: 100px;
+    }
+
+    .instructions {
+      background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+      padding: 1.5rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      border-left: 4px solid #2196f3;
+    }
+
+    .instructions h3 {
+      color: #1976d2;
+      margin-top: 0;
+    }
+
+    .instructions ul {
+      margin: 0;
+      padding-left: 1.5rem;
+    }
+
+    .instructions li {
+      margin: 0.5rem 0;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="test-container">
+    <div class="header">
+      <h1><i class="fas fa-list-alt"></i> Teste do Dropdown Selector</h1>
+      <p>Componente de seleção de versões bíblicas, idiomas e blocos genealógicos</p>
+    </div>
+
+    <div class="instructions">
+      <h3><i class="fas fa-info-circle"></i> Como usar:</h3>
+      <ul>
+        <li>Clique nos dropdowns para ver as opções disponíveis</li>
+        <li>Selecione diferentes versões bíblicas (NVT, ARC, NVI, ACF)</li>
+        <li>Escolha o idioma preferido</li>
+        <li>Filtre por blocos genealógicos específicos</li>
+        <li>As seleções são exibidas em tempo real abaixo</li>
+      </ul>
+    </div>
+
+    <!-- Dropdown Component -->
+    <DropdownSelector client:load />
+
+    <!-- Selection Display -->
+    <div class="selection-display">
+      <h3><i class="fas fa-check-circle"></i> Seleção Atual:</h3>
+      
+      <div class="selection-item">
+        <i class="fas fa-bible"></i>
+        <strong>Versão:</strong>
+        <span>Use o dropdown acima para selecionar versões</span>
+      </div>
+      
+      <div class="selection-item">
+        <i class="fas fa-globe"></i>
+        <strong>Idioma:</strong>
+        <span>Use o dropdown acima para selecionar idiomas</span>
+      </div>
+      
+      <div class="selection-item">
+        <i class="fas fa-layer-group"></i>
+        <strong>Bloco:</strong>
+        <span>Use o dropdown acima para selecionar blocos</span>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -6,7 +6,7 @@ export interface Props {
 
 const { 
   title = "Linhagem Bíblica: De Adão a Cristo",
-  description = "Genealogia completa da linhagem principal de Adão até Jesus Cristo, conectando as eras pré e pós-Dilúvio com a linhagem real em Mateus."
+  description = "Genealogia completa da linhagem principal até Jesus Cristo, conectando as eras pré e pós-Dilúvio com a linhagem real em Mateus."
 } = Astro.props;
 ---
 
@@ -45,26 +45,99 @@ const {
     <!-- Skip to main content for accessibility -->
     <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
     
-    <!-- Header with biblical design -->
-    <header class="main-header" role="banner">
-      <div class="header-container">
-        <div class="logo-section">
-          <h1 class="site-title">
-            <span class="title-icon"><i class="fas fa-tree" aria-hidden="true"></i></span>
-            <span class="title-text">Linhagem de Adão</span>
-          </h1>
-          <p class="site-subtitle">De Adão a Cristo • Gênesis a Mateus</p>
+    <!-- Mobile Toggle Button (Outside sidebar, visible only on mobile) -->
+    <button class="mobile-toggle-btn" id="mobileToggle" aria-label="Abrir/Fechar menu lateral">
+      <span class="mobile-toggle-icon" id="mobileToggleIcon">☰</span>
+    </button>
+    
+    <!-- Floating Sidebar -->
+    <aside class="floating-sidebar" id="sidebar" role="navigation" aria-label="Navegação e filtros">
+      <!-- Desktop Toggle Button (Inside sidebar, visible only on desktop) -->
+      <button class="desktop-toggle-btn" id="desktopToggle" aria-label="Expandir/Recolher menu lateral">
+        <span class="desktop-toggle-icon" id="desktopToggleIcon">☰</span>
+      </button>
+      
+      <!-- Sidebar Content -->
+      <div class="sidebar-content" id="sidebarContent">
+        <!-- Logo Section -->
+        <div class="sidebar-header">
+          <div class="sidebar-logo">
+            <i class="fas fa-tree" aria-hidden="true"></i>
+            <div class="logo-text">
+              <h1>Linhagem de Adão</h1>
+              <p>De Adão a Cristo</p>
+            </div>
+          </div>
         </div>
         
-        <nav class="main-nav" role="navigation" aria-label="Navegação principal">
-          <ul class="nav-list">
-            <li><a href="#genealogy" class="nav-link">Genealogia</a></li>
-            <li><a href="#timeline" class="nav-link">Timeline</a></li>
-            <li><a href="#about" class="nav-link">Sobre</a></li>
+        <!-- Navigation Menu -->
+        <nav class="sidebar-nav" role="navigation">
+          <h3 class="nav-title">
+            <i class="fas fa-compass"></i>
+            Navegação
+          </h3>
+          <ul class="nav-menu">
+            <li><a href="/" class="nav-item"><i class="fas fa-home"></i><span>Início</span></a></li>
+            <li><a href="/tree" class="nav-item"><i class="fas fa-sitemap"></i><span>Árvore Genealógica</span></a></li>
+            <li><a href="#genealogy" class="nav-item"><i class="fas fa-users"></i><span>Genealogia</span></a></li>
+            <li><a href="#timeline" class="nav-item"><i class="fas fa-clock"></i><span>Timeline</span></a></li>
+            <li><a href="#about" class="nav-item"><i class="fas fa-info-circle"></i><span>Sobre</span></a></li>
           </ul>
         </nav>
+        
+        <!-- Filters Section -->
+        <div class="sidebar-filters">
+          <h3 class="filter-title">
+            <i class="fas fa-filter"></i>
+            Filtros
+          </h3>
+          
+          <!-- Period Filter -->
+          <div class="filter-group">
+            <label for="periodFilter" class="filter-label">Período:</label>
+            <select id="periodFilter" class="filter-select">
+              <option value="all">Todos os Períodos</option>
+              <option value="pre-flood">Pré-Dilúvio</option>
+              <option value="post-flood">Pós-Dilúvio</option>
+              <option value="patriarchs">Patriarcas</option>
+              <option value="kings">Reis</option>
+              <option value="post-exile">Pós-Exílio</option>
+            </select>
+          </div>
+          
+          <!-- Version Filter -->
+          <div class="filter-group">
+            <label for="versionFilter" class="filter-label">Versão:</label>
+            <select id="versionFilter" class="filter-select">
+              <option value="nvt">NVT</option>
+              <option value="arc">ARC</option>
+              <option value="nvi">NVI</option>
+            </select>
+          </div>
+          
+          <!-- Search -->
+          <div class="filter-group">
+            <label for="searchFilter" class="filter-label">Buscar:</label>
+            <div class="search-container">
+              <input type="text" id="searchFilter" class="search-input" placeholder="Nome ou referência...">
+              <i class="fas fa-search search-icon"></i>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Actions -->
+        <div class="sidebar-actions">
+          <button class="action-btn primary">
+            <i class="fas fa-download"></i>
+            <span>Exportar</span>
+          </button>
+          <button class="action-btn secondary">
+            <i class="fas fa-share"></i>
+            <span>Compartilhar</span>
+          </button>
+        </div>
       </div>
-    </header>
+    </aside>
 
     <!-- Main content area -->
     <main id="main-content" class="main-content" role="main">
@@ -89,6 +162,109 @@ const {
     </footer>
   </body>
 </html>
+
+<script>
+  // Sidebar Toggle Functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const sidebar = document.getElementById('sidebar');
+    const mobileToggle = document.getElementById('mobileToggle');
+    const desktopToggle = document.getElementById('desktopToggle');
+    const mobileToggleIcon = document.getElementById('mobileToggleIcon');
+    const desktopToggleIcon = document.getElementById('desktopToggleIcon');
+    const sidebarContent = document.getElementById('sidebarContent');
+    
+    if (!sidebar) return;
+    
+    // Mobile Toggle
+    if (mobileToggle && mobileToggleIcon) {
+      mobileToggle.addEventListener('click', function() {
+        const isExpanded = sidebar.classList.contains('expanded');
+        
+        if (isExpanded) {
+          sidebar.classList.remove('expanded');
+          mobileToggleIcon.textContent = '☰';
+          mobileToggle.setAttribute('aria-label', 'Abrir menu lateral');
+        } else {
+          sidebar.classList.add('expanded');
+          mobileToggleIcon.textContent = '✕';
+          mobileToggle.setAttribute('aria-label', 'Fechar menu lateral');
+        }
+      });
+    }
+
+    // Desktop Toggle
+    if (desktopToggle && desktopToggleIcon) {
+      desktopToggle.addEventListener('click', function() {
+        const isExpanded = sidebar.classList.contains('expanded');
+        
+        if (isExpanded) {
+          sidebar.classList.remove('expanded');
+          desktopToggleIcon.textContent = '☰';
+          desktopToggle.setAttribute('aria-label', 'Expandir menu lateral');
+        } else {
+          sidebar.classList.add('expanded');
+          desktopToggleIcon.textContent = '✕';
+          desktopToggle.setAttribute('aria-label', 'Recolher menu lateral');
+        }
+      });
+    }
+    
+    // Close sidebar when clicking outside (on mobile)
+    document.addEventListener('click', function(event) {
+      const target = event.target as Node;
+      if (window.innerWidth <= 768 && 
+          sidebar.classList.contains('expanded') && 
+          target && !sidebar.contains(target) && 
+          mobileToggle && !mobileToggle.contains(target as Node)) {
+        sidebar.classList.remove('expanded');
+        if (mobileToggleIcon) {
+          mobileToggleIcon.textContent = '☰';
+          mobileToggle.setAttribute('aria-label', 'Abrir menu lateral');
+        }
+      }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+      if (window.innerWidth > 768) {
+        // On desktop, keep sidebar visible but collapsed by default
+        sidebar.classList.remove('expanded');
+        if (mobileToggleIcon) {
+          mobileToggleIcon.textContent = '☰';
+        }
+        if (desktopToggleIcon) {
+          desktopToggleIcon.textContent = '☰';
+        }
+      }
+    });
+    
+    // Filter functionality placeholders
+    const periodFilter = document.getElementById('periodFilter') as HTMLSelectElement;
+    const versionFilter = document.getElementById('versionFilter') as HTMLSelectElement;
+    const searchFilter = document.getElementById('searchFilter') as HTMLInputElement;
+    
+    if (periodFilter) {
+      periodFilter.addEventListener('change', function() {
+        console.log('Period filter changed:', this.value);
+        // TODO: Implement period filtering
+      });
+    }
+    
+    if (versionFilter) {
+      versionFilter.addEventListener('change', function() {
+        console.log('Version filter changed:', this.value);
+        // TODO: Implement version filtering
+      });
+    }
+    
+    if (searchFilter) {
+      searchFilter.addEventListener('input', function() {
+        console.log('Search filter changed:', this.value);
+        // TODO: Implement search functionality
+      });
+    }
+  });
+</script>
 
 <style>
   /* CSS Custom Properties - Biblical Color Palette */
@@ -169,86 +345,348 @@ const {
     top: 6px;
   }
 
-  /* Header Styles */
-  .main-header {
+  /* Floating Sidebar Styles */
+  .floating-sidebar {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 60px;
+    height: fit-content;
+    max-height: calc(100vh - 40px);
     background: linear-gradient(135deg, var(--color-earth) 0%, var(--color-olive) 100%);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    z-index: 1000;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
     color: var(--color-white);
-    padding: var(--space-md) 0;
-    box-shadow: var(--shadow-md);
-    position: relative;
   }
 
-  .header-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 var(--space-md);
-    display: flex;
-    justify-content: space-between;
+  .floating-sidebar.expanded {
+    width: 320px;
+  }
+
+  /* Mobile Toggle Button (Always visible on mobile) */
+  .mobile-toggle-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: var(--color-earth);
+    border: 2px solid var(--color-white);
+    border-radius: 50%;
+    color: var(--color-white);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: none; /* Hidden on desktop */
     align-items: center;
-    flex-wrap: wrap;
-    gap: var(--space-md);
+    justify-content: center;
+    z-index: 1003;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   }
 
-  .logo-section {
-    flex: 1;
+  .mobile-toggle-btn:hover {
+    background: var(--color-olive);
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
   }
 
-  .site-title {
-    font-family: var(--font-serif);
-    font-size: 2rem;
-    font-weight: 600;
-    margin: 0 0 var(--space-xs) 0;
-    display: flex;
-    align-items: center;
-    gap: var(--space-sm);
+  .mobile-toggle-btn:active {
+    transform: scale(0.95);
   }
 
-  .title-icon {
-    font-size: 2.5rem;
-    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
-  }
-
-  .site-subtitle {
+  /* Desktop Toggle Button (Inside sidebar) */
+  .desktop-toggle-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 35px;
+    height: 35px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    color: var(--color-white);
     font-size: 0.9rem;
-    margin: 0;
-    opacity: 0.9;
-    font-style: italic;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1001;
   }
 
-  /* Navigation */
-  .main-nav {
+  .desktop-toggle-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.05);
+  }
+
+  .desktop-toggle-btn:active {
+    transform: scale(0.95);
+  }
+
+  .mobile-toggle-icon,
+  .desktop-toggle-icon {
+    transition: transform 0.2s ease;
+    font-size: inherit;
+    font-style: normal;
+    line-height: 1;
+  }
+
+  .floating-sidebar.expanded .mobile-toggle-icon,
+  .floating-sidebar.expanded .desktop-toggle-icon {
+    transform: rotate(90deg);
+  }
+
+  /* Show/Hide buttons based on screen size */
+  @media (max-width: 768px) {
+    .mobile-toggle-btn {
+      display: flex;
+      animation: pulseToggle 2s ease-in-out 3;
+    }
+    
+    .desktop-toggle-btn {
+      display: none;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .mobile-toggle-btn {
+      display: none;
+    }
+    
+    .desktop-toggle-btn {
+      display: flex;
+    }
+  }
+
+  .sidebar-content {
+    padding: 60px 0 20px 0;
+    height: 100%;
+    overflow-y: auto;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  .floating-sidebar.expanded .sidebar-content {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* Sidebar Header */
+  .sidebar-header {
+    padding: 0 20px 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .sidebar-logo i {
+    font-size: 24px;
     flex-shrink: 0;
   }
 
-  .nav-list {
+  .logo-text h1 {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .logo-text p {
+    font-size: 0.8rem;
+    margin: 2px 0 0 0;
+    opacity: 0.8;
+    font-style: italic;
+  }
+
+  /* Sidebar Navigation */
+  .sidebar-nav {
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .nav-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0 0 15px 20px;
     display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .nav-menu {
     list-style: none;
     margin: 0;
     padding: 0;
-    gap: var(--space-md);
   }
 
-  .nav-link {
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px;
     color: var(--color-white);
     text-decoration: none;
-    padding: var(--space-xs) var(--space-sm);
-    border-radius: var(--radius-sm);
-    transition: background-color 0.2s, transform 0.2s;
-    font-weight: 500;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
   }
 
-  .nav-link:hover, .nav-link:focus {
-    background-color: rgba(255, 255, 255, 0.2);
+  .nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    padding-left: 25px;
+  }
+
+  .nav-item i {
+    width: 16px;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* Sidebar Filters */
+  .sidebar-filters {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .filter-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 0 0 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .filter-group {
+    margin-bottom: 15px;
+  }
+
+  .filter-label {
+    display: block;
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    font-weight: 500;
+    opacity: 0.9;
+  }
+
+  .filter-select {
+    width: 100%;
+    padding: 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    color: var(--color-white);
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+
+  .filter-select:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  }
+
+  .search-container {
+    position: relative;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 8px 35px 8px 12px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-sm);
+    color: var(--color-white);
+    font-size: 0.85rem;
+  }
+
+  .search-input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  }
+
+  .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* Sidebar Actions */
+  .sidebar-actions {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .action-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border: none;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .action-btn.primary {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--color-white);
+  }
+
+  .action-btn.secondary {
+    background: transparent;
+    color: var(--color-white);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .action-btn:hover {
     transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .action-btn.primary:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .action-btn.secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
   }
 
   /* Main Content */
   .main-content {
     flex: 1;
+    width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: var(--space-xl) var(--space-md);
-    width: 100%;
+    transition: padding 0.3s ease;
   }
 
   /* Footer */
@@ -297,30 +735,144 @@ const {
     opacity: 0.8;
   }
 
-  /* Responsive Design - Mobile First */
+  /* Tablet Responsive Design */
+  @media (max-width: 1024px) and (min-width: 769px) {
+    .floating-sidebar {
+      width: 280px;
+    }
+    
+    .main-content {
+      margin-left: 0;
+      max-width: 1000px;
+      padding: var(--space-lg) var(--space-md);
+    }
+  }
+
+  /* Mobile Responsive Design */
   @media (max-width: 768px) {
-    .header-container {
+    .floating-sidebar {
+      width: 100%;
+      height: auto;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: auto;
+      transform: translateY(-100%);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 0 0 var(--radius-md) var(--radius-md);
+      z-index: 1001;
+    }
+
+    .floating-sidebar.expanded {
+      transform: translateY(0);
+    }
+
+    /* Mobile backdrop overlay */
+    .floating-sidebar.expanded::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+      animation: fadeIn 0.3s ease;
+    }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes pulseToggle {
+    0%, 100% { 
+      transform: scale(1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    50% { 
+      transform: scale(1.1);
+      box-shadow: 0 4px 16px rgba(139, 69, 19, 0.4);
+    }
+  }
+
+    .sidebar-content {
       flex-direction: column;
+      padding: var(--space-md) var(--space-sm);
+      max-width: none;
+      gap: var(--space-sm);
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .floating-sidebar:not(.expanded) .sidebar-content {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-10px);
+    }
+
+    .floating-sidebar.expanded .sidebar-content {
+      transform: translateY(0);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .logo-section {
       text-align: center;
+      margin-bottom: var(--space-sm);
     }
 
-    .site-title {
-      font-size: 1.5rem;
-      justify-content: center;
+    .logo-section h1 {
+      font-size: 1.3rem;
     }
 
-    .title-icon {
-      font-size: 2rem;
+    .sidebar-nav {
+      margin: var(--space-sm) 0;
     }
 
     .nav-list {
+      flex-direction: row;
       flex-wrap: wrap;
       justify-content: center;
       gap: var(--space-sm);
     }
 
+    .nav-item {
+      flex: 0 0 auto;
+    }
+
+    .sidebar-filters {
+      display: flex;
+      flex-direction: row;
+      gap: var(--space-sm);
+      justify-content: space-between;
+      margin: var(--space-sm) 0;
+    }
+
+    .filter-group {
+      flex: 1;
+    }
+
+    .filter-group label {
+      font-size: 0.8rem;
+    }
+
+    .filter-group select,
+    .filter-group input {
+      font-size: 0.9rem;
+      padding: var(--space-xs);
+    }
+
+    .sidebar-actions {
+      flex-direction: row;
+      justify-content: center;
+      gap: var(--space-sm);
+      margin-top: var(--space-sm);
+    }
+
     .main-content {
-      padding: var(--space-lg) var(--space-sm);
+      max-width: none;
+      padding: calc(var(--space-xl) + 60px) var(--space-sm) var(--space-lg);
     }
 
     .biblical-quote blockquote {
@@ -329,19 +881,44 @@ const {
     }
   }
 
+  /* Small Mobile Responsive Design */
   @media (max-width: 480px) {
     :root {
       --space-xl: 2rem;
       --space-lg: 1.5rem;
     }
 
-    .site-title {
-      font-size: 1.3rem;
+    .sidebar-toggle {
+      width: 35px;
+      height: 35px;
+      font-size: 0.9rem;
     }
 
-    .nav-link {
+    .logo-section h1 {
+      font-size: 1.1rem;
+    }
+
+    .sidebar-filters {
+      flex-direction: column;
+      gap: var(--space-xs);
+    }
+
+    .nav-list {
+      gap: var(--space-xs);
+    }
+
+    .nav-item a {
       padding: var(--space-xs);
       font-size: 0.9rem;
+    }
+
+    .sidebar-actions {
+      flex-direction: column;
+    }
+
+    .main-content {
+      max-width: none;
+      padding: calc(var(--space-lg) + 50px) var(--space-xs) var(--space-md);
     }
   }
 

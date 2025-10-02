@@ -5,6 +5,7 @@ Este diretório contém toda a documentação técnica e de projeto da aplicaç�
 ## 📋 Índice da Documentação
 
 ### 📄 Documentos de Projeto
+
 - **[PRD - Product Requirements Document](./prd.txt)**  
   Requisitos completos do produto, funcionalidades e especificações
 
@@ -18,6 +19,7 @@ Este diretório contém toda a documentação técnica e de projeto da aplicaç�
   Acompanhamento do progresso de desenvolvimento
 
 ### 🏗️ Documentação Técnica
+
 - **[Tech Context](./tech_context.md)**  
   Especificações técnicas, stack e arquitetura
 
@@ -28,6 +30,7 @@ Este diretório contém toda a documentação técnica e de projeto da aplicaç�
   Padrões de design e arquitetura do sistema
 
 ### 🛠️ Guias de Setup
+
 - **[MCP Setup](./MCP_SETUP.md)**  
   Configuração completa de servidores MCP (Model Context Protocol)
 
@@ -38,23 +41,27 @@ Este diretório contém toda a documentação técnica e de projeto da aplicaç�
   Guia para testes locais com Browser MCP
 
 ### 📊 Gestão de Projeto
+
 - **[Taskmaster](./TASKMASTER.md)**  
   Sistema de gerenciamento de tarefas e organização do projeto
 
 ## 🎯 Como Usar Esta Documentação
 
 ### Para Desenvolvedores
+
 1. Comece com [Tech Context](./tech_context.md) para entender a stack
 2. Leia [Project Rules](./project_rules.md) para padrões de código
 3. Configure o ambiente com [MCP Setup](./MCP_SETUP.md)
 4. Use [Taskmaster](./TASKMASTER.md) para organização das tarefas
 
 ### Para Product Managers
+
 1. Consulte o [PRD](./prd.txt) para especificações completas
 2. Acompanhe o [Progress](./progress.md) para status atual
 3. Revise [Product Context](./product_context.md) para contexto
 
 ### Para Stakeholders
+
 1. Leia o [Project Brief](./project_brief.md) para visão geral
 2. Consulte [Progress](./progress.md) para acompanhamento
 3. Veja [System Patterns](./system_patherns.md) para arquitetura
@@ -74,4 +81,4 @@ Para dúvidas sobre a documentação ou sugestões de melhoria, abra uma issue n
 
 ---
 
-*Voltar para: [README Principal](../README.md)*
+_Voltar para: [README Principal](../README.md)_

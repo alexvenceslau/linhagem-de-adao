@@ -8,6 +8,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## [Não Lançado]
 
 ### Planejado
+
 - [ ] Árvore genealógica interativa com Vue Flow
 - [ ] Menu dropdown para seleção de versões bíblicas
 - [ ] Sistema de tooltips com referências bíblicas
@@ -17,6 +18,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## [0.1.0-dev] - 2025-10-01
 
 ### Adicionado
+
 - ✅ **Estrutura base do projeto** com Astro v5.14.1 + Vue 3.5.22 + TypeScript
 - ✅ **Dados genealógicos completos** em JSON com 62 gerações organizadas em 5 blocos bíblicos
 - ✅ **Layout responsivo** com design temático bíblico e paleta de cores inspirada nas Escrituras
@@ -29,6 +31,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - ✅ **README abrangente** com guias de instalação e desenvolvimento
 
 ### Técnico
+
 - Configuração Astro com integração Vue 3
 - TypeScript strict mode habilitado
 - CSS moderno com variáveis customizadas
@@ -36,11 +39,12 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Estrutura de componentes Vue modulares
 - Sistema de cores temáticas bíblicas:
   - Terra: `#8B4513` (tons terrosos)
-  - Água: `#4682B4` (azul sereno) 
+  - Água: `#4682B4` (azul sereno)
   - Ouro: `#DAA520` (dourado divino)
   - Púrpura: `#800080` (realeza)
 
 ### Dados
+
 - **Genealogia completa** de Adão a Cristo (62 gerações)
 - **5 blocos históricos**:
   1. Pré-Dilúvio (Adão a Noé)
@@ -52,6 +56,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Estrutura JSON validada e tipada
 
 ### Documentação
+
 - Product Requirements Document (PRD) completo
 - Especificações técnicas detalhadas
 - Guias de setup para MCP, Context7 e testes locais
@@ -59,6 +64,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - Padrões de código e diretrizes de desenvolvimento
 
 ### Infraestrutura
+
 - Git configurado com .gitignore adequado
 - VS Code configurado com extensões recomendadas
 - Scripts de desenvolvimento e build
@@ -67,6 +73,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ## Formato das Entradas
 
 ### Tipos de Mudanças
+
 - `Adicionado` para novas funcionalidades
 - `Modificado` para mudanças em funcionalidades existentes
 - `Depreciado` para funcionalidades que serão removidas em breve
@@ -75,6 +82,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 - `Segurança` para melhorias de segurança
 
 ### Status
+
 - ✅ **Implementado**: Funcionalidade completa e testada
 - 🔄 **Em Desenvolvimento**: Funcionalidade parcialmente implementada
 - 📋 **Planejado**: Funcionalidade definida mas não iniciada
@@ -84,6 +92,7 @@ e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 ---
 
 **Legenda de Versões:**
+
 - **Major** (X.0.0): Mudanças incompatíveis na API
 - **Minor** (0.X.0): Adição de funcionalidades compatíveis
 - **Patch** (0.0.X): Correções de bugs compatíveis

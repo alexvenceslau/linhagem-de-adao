@@ -1,0 +1,106 @@
+---
+import Layout from '../layouts/Layout.astro';
+import DropdownSelector from '../components/DropdownSelector.vue';
+
+const title = "Dropdown Test - Linhagem de Adão";
+const description = "Teste do componente de seleção";
+---
+<Layout title={title} description={description}>
+  <div class="test-container">
+    <div class="header">
+      <h1><i class="fas fa-list-alt"></i> Teste do Dropdown Selector</h1>
+      <p>Componente de seleção de versões bíblicas, idiomas e blocos genealógicos</p>
+    </div>
+
+    <div class="instructions">
+      <h3><i class="fas fa-info-circle"></i> Como usar:</h3>
+      <ul>
+        <li>Clique nos dropdowns para ver as opções disponíveis</li>
+        <li>Selecione diferentes versões bíblicas (NVT, ARC, NVI, ACF)</li>
+        <li>Escolha o idioma preferido</li>
+        <li>Filtre por blocos genealógicos específicos</li>
+      </ul>
+    </div>
+
+    <!-- Componente Vue -->
+    <DropdownSelector client:load />
+
+    <div class="feature-info">
+      <h3><i class="fas fa-star"></i> Funcionalidades:</h3>
+      <ul>
+        <li>✅ Dropdowns modernos com animações suaves</li>
+        <li>✅ Suporte a versões bíblicas (NVT, ARC, NVI, ACF)</li>
+        <li>✅ Múltiplos idiomas com flags</li>
+        <li>✅ Blocos genealógicos organizados</li>
+        <li>✅ Responsivo para dispositivos móveis</li>
+        <li>✅ Modo escuro automático</li>
+        <li>✅ Acessibilidade (ARIA)</li>
+      </ul>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .test-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #8B4513;
+  }
+
+  .header h1 {
+    color: #8B4513;
+    margin: 0 0 0.5rem;
+    font-size: 2rem;
+  }
+
+  .header p {
+    color: #666;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+
+  .instructions {
+    background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    border-left: 4px solid #2196f3;
+  }
+
+  .instructions h3 {
+    color: #1976d2;
+    margin-top: 0;
+  }
+
+  .feature-info {
+    background: linear-gradient(135deg, #f1f8e9 0%, #c8e6c9 100%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+    border-left: 4px solid #4caf50;
+  }
+
+  .feature-info h3 {
+    color: #388e3c;
+    margin-top: 0;
+  }
+
+  .instructions ul,
+  .feature-info ul {
+    margin: 0;
+    padding-left: 1.5rem;
+  }
+
+  .instructions li,
+  .feature-info li {
+    margin: 0.5rem 0;
+    color: #333;
+  }
+</style>

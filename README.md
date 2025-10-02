@@ -35,6 +35,7 @@ linhagem-de-adao/
 ## 🎯 Funcionalidades
 
 ### ✅ Implementado
+
 - [x] Layout responsivo com design bíblico
 - [x] Sistema de ícones Font Awesome v7
 - [x] Dados genealógicos estruturados (62 gerações)
@@ -42,6 +43,7 @@ linhagem-de-adao/
 - [x] Página inicial com estatísticas
 
 ### 🔄 Em Desenvolvimento
+
 - [ ] Árvore genealógica interativa
 - [ ] Menu dropdown para versões bíblicas
 - [ ] Sistema de tooltips com referências
@@ -51,7 +53,7 @@ linhagem-de-adao/
 ## 🏛️ Períodos Históricos
 
 1. **Pré-Dilúvio** (Adão a Noé) - 🌱 Verde
-2. **Pós-Dilúvio** (Noé a Abraão) - 🚢 Azul  
+2. **Pós-Dilúvio** (Noé a Abraão) - 🚢 Azul
 3. **Patriarcas** (Abraão a Davi) - 👑 Dourado
 4. **Reis** (Davi ao Exílio) - ♕ Roxo
 5. **Pós-Exílio** (até Cristo) - ⭐ Vermelho
@@ -59,10 +61,12 @@ linhagem-de-adao/
 ## 🛠️ Desenvolvimento
 
 ### Pré-requisitos
+
 - Node.js 20.3.0+
 - npm 9.6.4+
 
 ### Instalação
+
 ```bash
 # Clonar o repositório
 git clone https://github.com/alexvenceslau/linhagem-de-adao.git
@@ -77,6 +81,7 @@ npm run dev
 ```
 
 ### Scripts Disponíveis
+
 ```bash
 npm run dev      # Servidor de desenvolvimento
 npm run build    # Build para produção
@@ -96,12 +101,14 @@ A documentação completa está disponível no diretório [`/docs`](./docs/):
 ## 🎨 Design System
 
 ### Cores Principais
+
 - **Terra**: `#8B4513` - Tons terrosos bíblicos
 - **Água**: `#4682B4` - Azul sereno das águas
 - **Ouro**: `#DAA520` - Dourado divino
 - **Púrpura**: `#800080` - Realeza e reverência
 
 ### Tipografia
+
 - **Títulos**: Crimson Text (serif bíblico)
 - **Texto**: Inter (sans-serif moderno)
 
@@ -139,4 +146,4 @@ Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para de
 
 ---
 
-*"Este é o livro da genealogia de Adão..."* - Gênesis 5:1 (NVT)
+_"Este é o livro da genealogia de Adão..."_ - Gênesis 5:1 (NVT)

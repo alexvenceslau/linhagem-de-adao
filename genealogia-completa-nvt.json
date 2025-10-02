@@ -4,11 +4,11 @@
   "language": "pt-BR",
   "source": "Gênesis 5:1-32; 11:10-32; Mateus 1:1-17",
   "description": "Genealogia completa da linhagem principal de Adão até Jesus Cristo, conectando as eras pré e pós-Dilúvio com a linhagem real em Mateus. Organizada em blocos para facilitar a visualização.",
-  "totalGenerations": 62,
+  "totalGenerations": 69,
   "blocks": [
     {
       "name": "Bloco Pré-Dilúvio: De Adão a Noé",
-      "generations": 10,
+      "generations": 17,
       "entries": [
         {
           "verse": "5:3",
@@ -21,14 +21,74 @@
           "notes": "Primeiro homem, criado à imagem de Deus (Gn 1:27)."
         },
         {
+          "verse": "3:20",
+          "father": null,
+          "name": "Eva",
+          "age_at_son": null,
+          "years_after": null,
+          "total": null,
+          "mother": null,
+          "notes": "Primeira mulher, 'mãe de todos os viventes'. Criada da costela de Adão (Gn 2:22)."
+        },
+        {
+          "verse": "4:1",
+          "father": "Adão",
+          "name": "Caim",
+          "age_at_son": null,
+          "years_after": null,
+          "total": null,
+          "mother": "Eva",
+          "notes": "Primeiro filho de Adão e Eva, agricultor. Matou seu irmão Abel por ciúmes."
+        },
+        {
+          "verse": "4:17",
+          "father": "Caim",
+          "name": "Enoque (Caim)",
+          "age_at_son": null,
+          "years_after": null,
+          "total": null,
+          "mother": null,
+          "notes": "Filho de Caim, primeira cidade construída levou seu nome (diferente do Enoque justo)."
+        },
+        {
+          "verse": "4:18",
+          "father": "Enoque (Caim)",
+          "name": "Irade",
+          "age_at_son": null,
+          "years_after": null,
+          "total": null,
+          "mother": null,
+          "notes": "Descendente da linhagem de Caim."
+        },
+        {
+          "verse": "4:22",
+          "father": "Lameque (Caim)",
+          "name": "Tubalcaim",
+          "age_at_son": null,
+          "years_after": null,
+          "total": null,
+          "mother": null,
+          "notes": "Ferreiro, primeiro a trabalhar com bronze e ferro. Linhagem de Caim."
+        },
+        {
+          "verse": "4:2",
+          "father": "Adão",
+          "name": "Abel",
+          "age_at_son": null,
+          "years_after": null,
+          "total": null,
+          "mother": "Eva",
+          "notes": "Pastor de ovelhas, suas ofertas foram aceitas por Deus. Morto por Caim."
+        },
+        {
           "verse": "5:6",
           "father": "Adão",
           "name": "Sete",
           "age_at_son": 105,
           "years_after": 807,
           "total": 912,
-          "mother": null,
-          "notes": "Filho da esperança, substituto de Abel."
+          "mother": "Eva",
+          "notes": "Filho da esperança, substituto de Abel. Linhagem dos justos."
         },
         {
           "verse": "5:9",
@@ -109,6 +169,36 @@
           "total": 950,
           "mother": null,
           "notes": "Construtor da arca; salvou a humanidade e os animais do Dilúvio (Gn 6-9)."
+        },
+        {
+          "verse": "5:32",
+          "father": "Noé",
+          "name": "Sem",
+          "age_at_son": 100,
+          "years_after": 500,
+          "total": 600,
+          "mother": null,
+          "notes": "Filho mais velho de Noé; ancestral dos semitas e da linhagem de Cristo."
+        },
+        {
+          "verse": "5:32",
+          "father": "Noé",
+          "name": "Cam",
+          "age_at_son": null,
+          "years_after": null,
+          "total": null,
+          "mother": null,
+          "notes": "Filho do meio de Noé; ancestral dos povos africanos e canaanitas."
+        },
+        {
+          "verse": "5:32",
+          "father": "Noé",
+          "name": "Jafé",
+          "age_at_son": null,
+          "years_after": null,
+          "total": null,
+          "mother": null,
+          "notes": "Filho mais novo de Noé; ancestral dos povos europeus e asiáticos."
         }
       ]
     },
