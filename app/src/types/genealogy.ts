@@ -41,11 +41,11 @@ export interface GenealogyData {
 
 // Helper types for UI components
 export type BlockName =
-  | "Bloco Pré-Dilúvio: De Adão a Noé"
-  | "Bloco Pós-Dilúvio: De Noé a Abraão"
-  | "Bloco 1: De Abraão a Davi"
-  | "Bloco 2: De Davi ao Exílio na Babilônia"
-  | "Bloco 3: Do Exílio na Babilônia a Cristo";
+  | "Pré-Dilúvio: De Adão a Noé"
+  | "Pós-Dilúvio: De Noé a Abraão"
+  | "1: De Abraão a Davi"
+  | "2: De Davi ao Exílio na Babilônia"
+  | "3: Do Exílio na Babilônia a Cristo";
 
 export type BiblicalVersion = "NVT" | "ARA" | "NVI";
 

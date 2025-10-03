@@ -1,69 +1,175 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import genealogyData from '../../../genealogia-completa-nvt.json';
-import type { GenealogyData } from '../types/genealogy';
 
-const data = genealogyData as GenealogyData;
+// Construir organograma completo com todos os blocos
+const allBlocks = genealogyData.blocks;
+let allEntries: any[] = [];
+
+// Combinar todas as entradas de todos os blocos
+allBlocks.forEach((block: any) => {
+  allEntries = [...allEntries, ...block.entries];
+});
+
+// Função para agrupar por pai
+const groupByFather = (entries: any[]) => {
+  const groups: any = {};
+  entries.forEach((entry: any) => {
+    const father = entry.father || 'root';
+    if (!groups[father]) groups[father] = [];
+    groups[father].push(entry);
+  });
+  return groups;
+};
+
+// Função recursiva para construir árvore
+const buildFamilyTree = (parentName: string | null, allGroups: any, level: number = 1, maxLevels: number = 15): any => {
+  const children = allGroups[parentName || 'root'] || [];
+  
+  if (children.length === 0 || level > maxLevels) return null;
+  
+  // Identificar linhagem principal (Adão → Sete → Enos → ... → Noé → Sem → Arfaxade → ... → Jesus)
+  const mainLineage = [
+    'Adão', 'Sete', 'Enos', 'Quenan', 'Malael', 'Jarede', 'Enoque', 'Matusalém', 'Lameque', 'Noé',
+    'Sem', 'Arfaxade', 'Salá', 'Éber', 'Pelegue', 'Reú', 'Serugue', 'Naor', 'Tera', 'Abraão',
+    'Isaque', 'Jacó', 'Judá', 'Perez', 'Hezrom', 'Rão', 'Aminadabe', 'Naassom', 'Salmom', 'Boaz'
+  ];
+  
+  return {
+    level,
+    children: children.map((child: any) => ({
+      ...child,
+      isMainLineage: mainLineage.includes(child.name),
+      descendants: buildFamilyTree(child.name, allGroups, level + 1, maxLevels)
+    }))
+  };
+};
+
+const familyGroups = groupByFather(allEntries);
+
+// Construir árvore começando com os filhos da raiz (Adão, Eva)
+const familyTree = buildFamilyTree(null, familyGroups, 1, 12); // Limitando a 12 níveis para performance
+
+// Preparar dados para renderização direta (até 3 níveis)
+const rootPeople = familyTree?.children || [];
+const level1Data = rootPeople.map((person: any) => ({
+  ...person,
+  children: person.descendants?.children?.slice(0, 6) || []
+}));
 ---
 
 <Layout title="Árvore Genealógica - Linhagem de Adão" description="Explore a árvore genealógica interativa de Adão a Cristo">
   <!-- Tree Component - To be implemented -->
   <section class="tree-section">
     <div class="full-width-container">
-      <div class="coming-soon">
-        <h2>Árvore Genealógica</h2>
-        <p>Componente da árvore genealógica será implementado aqui.</p>
-        <p>Dados disponíveis: {data.totalGenerations} gerações em {data.blocks.length} blocos.</p>
+      <!-- Tree Controls -->
+      <div class="tree-controls">
+        <button class="zoom-btn" id="zoomIn" aria-label="Aumentar zoom">
+          <i class="fas fa-plus"></i>
+        </button>
+        <span class="zoom-level" id="zoomLevel">100%</span>
+        <button class="zoom-btn" id="zoomOut" aria-label="Diminuir zoom">
+          <i class="fas fa-minus"></i>
+        </button>
+        <button class="zoom-btn" id="resetZoom" aria-label="Resetar zoom">
+          <i class="fas fa-expand-arrows-alt"></i>
+        </button>
+      </div>
+
+      <!-- Tree Container with overflow and zoom -->
+      <div class="tree-container" id="treeContainer">
+        <div class="tree-content" id="treeContent">
+          <!-- Organograma Genealógico Simplificado -->
+          <div class="genealogy-tree org-chart">
+            <div class="org-chart-container">
+              {level1Data.length > 0 && (
+                <div class="root-level">
+                  <div class="children-row">
+                    {level1Data.map((person: any) => (
+                      <div class="person-container" data-level="1">
+                        <div class={`person-node ${person.isMainLineage ? 'main-lineage' : 'branch'} ${person.name === 'Adão' ? 'root-node' : ''}`}>
+                          <div class="generation-badge">Nível 1</div>
+                          <div class="person-avatar">
+                            <i class="fas fa-user"></i>
+                          </div>
+                          <div class="person-info">
+                            <h3 class="person-name">{person.name}</h3>
+                            <p class="person-details">{person.notes || ''}</p>
+                            {person.total && <p class="person-years">Viveu {person.total} anos</p>}
+                            <p class="person-reference">Gênesis {person.verse}</p>
+                          </div>
+                          {person.children.length > 0 && (
+                            <div class="has-children-indicator">
+                              <i class="fas fa-chevron-down"></i>
+                            </div>
+                          )}
+                        </div>
+                        
+                        {person.children.length > 0 && (
+                          <div class="children-container">
+                            <div class="connection-line-vertical"></div>
+                            <div class="children-row">
+                              {person.children.map((child: any) => (
+                                <div class="person-container" data-level="2">
+                                  <div class={`person-node ${child.isMainLineage ? 'main-lineage' : 'branch'}`}>
+                                    <div class="generation-badge">Nível 2</div>
+                                    <div class="person-avatar">
+                                      <i class="fas fa-user"></i>
+                                    </div>
+                                    <div class="person-info">
+                                      <h3 class="person-name">{child.name}</h3>
+                                      <p class="person-details">{child.notes || ''}</p>
+                                      {child.total && <p class="person-years">Viveu {child.total} anos</p>}
+                                      <p class="person-reference">Gênesis {child.verse}</p>
+                                    </div>
+                                    {child.descendants?.children?.length > 0 && (
+                                      <div class="has-children-indicator">
+                                        <i class="fas fa-chevron-down"></i>
+                                      </div>
+                                    )}
+                                  </div>
+                                  
+                                  {child.descendants?.children?.length > 0 && (
+                                    <div class="children-container">
+                                      <div class="connection-line-vertical"></div>
+                                      <div class="children-row">
+                                        {child.descendants.children.slice(0, 4).map((grandchild: any) => (
+                                          <div class="person-container" data-level="3">
+                                            <div class={`person-node ${grandchild.isMainLineage ? 'main-lineage' : 'branch'}`}>
+                                              <div class="generation-badge">Nível 3</div>
+                                              <div class="person-avatar">
+                                                <i class="fas fa-user"></i>
+                                              </div>
+                                              <div class="person-info">
+                                                <h4 class="person-name">{grandchild.name}</h4>
+                                                <p class="person-details">{grandchild.notes || ''}</p>
+                                                {grandchild.total && <p class="person-years">Viveu {grandchild.total} anos</p>}
+                                                <p class="person-reference">Gênesis {grandchild.verse}</p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Legend Section -->
-  <section class="legend-section">
-    <div class="container">
-      <h3 class="legend-title">
-        <i class="fas fa-info-circle"></i>
-        Legenda dos Períodos
-      </h3>
-      <div class="legend-grid">
-        <div class="legend-item legend-pre-flood">
-          <div class="legend-color"></div>
-          <div class="legend-info">
-            <h4><i class="fas fa-seedling"></i> Pré-Dilúvio</h4>
-            <p>De Adão a Noé - Os primórdios da humanidade</p>
-          </div>
-        </div>
-        <div class="legend-item legend-post-flood">
-          <div class="legend-color"></div>
-          <div class="legend-info">
-            <h4><i class="fas fa-ship"></i> Pós-Dilúvio</h4>
-            <p>De Noé a Abraão - Recomeço após o dilúvio</p>
-          </div>
-        </div>
-        <div class="legend-item legend-patriarchs">
-          <div class="legend-color"></div>
-          <div class="legend-info">
-            <h4><i class="fas fa-crown"></i> Patriarcas</h4>
-            <p>De Abraão a Davi - Fundação do povo escolhido</p>
-          </div>
-        </div>
-        <div class="legend-item legend-kings">
-          <div class="legend-color"></div>
-          <div class="legend-info">
-            <h4><i class="fas fa-chess-king"></i> Reis</h4>
-            <p>De Davi ao Exílio - Reino unido e dividido</p>
-          </div>
-        </div>
-        <div class="legend-item legend-post-exile">
-          <div class="legend-color"></div>
-          <div class="legend-info">
-            <h4><i class="fas fa-star"></i> Pós-Exílio</h4>
-            <p>Do Exílio a Cristo - Restauração e esperança</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  
 </Layout>
 
 <style>
@@ -84,81 +190,423 @@ const data = genealogyData as GenealogyData;
     width: 100%;
     min-height: 100vh;
     padding: 0;
+    position: relative;
   }
 
-  .legend-section {
-    padding: 2rem 0;
-    background: #f8fafc;
+  /* Tree Controls */
+  .tree-controls {
+    position: fixed;
+    top: 100px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
   }
 
-  .legend-title {
-    font-size: 1.5rem;
+  .zoom-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: var(--color-earth);
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+  }
+
+  .zoom-btn:hover {
+    background: var(--color-olive);
+    transform: scale(1.1);
+  }
+
+  .zoom-level {
+    text-align: center;
+    font-size: 0.75rem;
     font-weight: 600;
-    margin: 0 0 2rem 0;
-    color: #1e293b;
+    color: var(--color-earth);
+    padding: 5px 0;
+  }
+
+  /* Tree Container with overflow and zoom */
+  .tree-container {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background: linear-gradient(135deg, #fdfbf7 0%, #f8f6f0 100%);
+    cursor: grab;
+  }
+
+  .tree-container:active {
+    cursor: grabbing;
+  }
+
+  .tree-content {
+    width: 200%;
+    height: 200%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    transform-origin: center center;
+    transition: transform 0.3s ease;
+  }
+
+  /* Genealogy Tree Structure */
+  .genealogy-tree {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.75rem;
+    padding: 100px 50px;
+    min-height: 100%;
+    justify-content: flex-start;
   }
 
-  .legend-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-  }
-
-  .legend-item {
-    background: white;
-    padding: 1rem;
-    border-radius: 8px;
+  .tree-level {
     display: flex;
-    align-items: center;
-    gap: 1rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    justify-content: center;
+    margin-bottom: 80px;
+    position: relative;
   }
 
-  .legend-color {
+  /* Organograma Layout */
+  .org-chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .org-chart-container {
+    min-width: 1200px;
+    padding: 40px;
+  }
+
+  .root-level {
+    display: flex;
+    justify-content: center;
+  }
+
+  .children-row {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    flex-wrap: nowrap;
+  }
+
+  .person-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .children-container {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* Linhas de conexão */
+  .connection-line-vertical {
+    width: 2px;
+    height: 40px;
+    background: var(--color-olive);
+    margin-bottom: 10px;
+  }
+
+  .children-horizontal-line {
+    height: 2px;
+    background: var(--color-olive);
+    margin-bottom: 10px;
+    position: relative;
+  }
+
+  /* Linhas horizontais conectando irmãos */
+  .level-2 .person-container::before,
+  .level-3 .person-container::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    width: 2px;
+    height: 12px;
+    background: var(--color-olive);
+  }
+
+  .level-2::before,
+  .level-3::before {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--color-olive);
+  }
+
+  /* Person Node Styles */
+  .person-node {
+    background: linear-gradient(135deg, var(--color-white) 0%, var(--color-sand) 100%);
+    border: 3px solid var(--color-earth);
+    border-radius: 20px;
+    padding: 20px;
+    width: 280px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 8px 25px rgba(139, 69, 19, 0.2);
+    transition: all 0.3s ease;
+  }
+
+  /* Variações dos nós para organograma */
+  .person-node.main-lineage {
+    border-color: var(--color-olive);
+    border-width: 4px;
+    box-shadow: 0 8px 30px rgba(139, 69, 19, 0.4);
+    background: linear-gradient(135deg, var(--color-white) 0%, #f0f8e8 100%);
+  }
+
+  .person-node.branch {
+    width: 240px;
+    padding: 15px;
+    background: linear-gradient(135deg, #f8f6f0 0%, #e8e6e0 100%);
+    border-color: var(--color-stone);
+    border-width: 2px;
+    opacity: 0.95;
+  }
+
+  .person-node.root-node {
+    border-color: var(--color-earth);
+    border-width: 5px;
+    box-shadow: 0 12px 40px rgba(139, 69, 19, 0.5);
+    background: linear-gradient(135deg, #fff8e1 0%, #f5f5dc 100%);
+  }
+
+  /* Tamanhos progressivos por nível */
+  .level-3 .person-node {
+    width: 200px;
+    padding: 12px;
+  }
+
+  .level-3 .person-name {
+    font-size: 1rem;
+  }
+
+  .level-3 .person-details {
+    font-size: 0.8rem;
+  }
+
+  /* Indicador de filhos */
+  .has-children-indicator {
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-olive);
+    color: white;
     width: 24px;
     height: 24px;
-    border-radius: 6px;
-    flex-shrink: 0;
-  }
-
-  .legend-pre-flood .legend-color {
-    background: #22c55e;
-  }
-
-  .legend-post-flood .legend-color {
-    background: #3b82f6;
-  }
-
-  .legend-patriarchs .legend-color {
-    background: #f59e0b;
-  }
-
-  .legend-kings .legend-color {
-    background: #8b5cf6;
-  }
-
-  .legend-post-exile .legend-color {
-    background: #ef4444;
-  }
-
-  .legend-info h4 {
-    font-size: 1rem;
-    font-weight: 600;
-    margin: 0 0 0.25rem 0;
-    color: #1e293b;
+    border-radius: 50%;
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    justify-content: center;
+    font-size: 0.7rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
 
-  .legend-info p {
-    margin: 0;
-    color: #64748b;
-    font-size: 0.9rem;
-    line-height: 1.4;
+  .has-children-indicator:hover {
+    background: var(--color-earth);
+    transform: translateX(-50%) scale(1.1);
+  }
+
+  .person-node:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(139, 69, 19, 0.3);
+    border-color: var(--color-olive);
+  }
+
+  /* Tree Connections */
+  .tree-level:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: 50%;
+    width: 3px;
+    height: 80px;
+    background: linear-gradient(to bottom, var(--color-earth), var(--color-olive));
+    transform: translateX(-50%);
+    z-index: 0;
+  }
+
+  .tree-level:not(:last-child) .person-node::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    width: 2px;
+    height: 40px;
+    background: var(--color-olive);
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  /* Generation Badge */
+  .generation-badge {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: var(--color-earth);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Special Node Types */
+  .root-node {
+    border-color: var(--color-gold);
+    background: linear-gradient(135deg, #fff9e6 0%, var(--color-sand) 100%);
+  }
+
+  .root-node .generation-badge {
+    background: var(--color-gold);
+  }
+
+  .special-node {
+    border-color: var(--color-purple);
+    background: linear-gradient(135deg, #f0e6ff 0%, #e6d9ff 100%);
+  }
+
+  .special-node .generation-badge {
+    background: var(--color-purple);
+  }
+
+  .ancient-node {
+    border-color: var(--color-olive);
+    background: linear-gradient(135deg, #f0f8e6 0%, #e6f2d9 100%);
+  }
+
+  .ancient-node .generation-badge {
+    background: var(--color-olive);
+  }
+
+  .noah-node {
+    border-color: var(--color-water);
+    background: linear-gradient(135deg, #e6f3ff 0%, #d9ebff 100%);
+  }
+
+  .noah-node .generation-badge {
+    background: var(--color-water);
+  }
+
+  /* Person Avatar */
+  .person-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-earth) 0%, var(--color-olive) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(139, 69, 19, 0.3);
+  }
+
+
+
+  /* Person Information */
+  .person-info h3 {
+    font-family: var(--font-serif);
+    color: var(--color-earth);
+    font-size: 1.4rem;
+    margin: 0 0 8px 0;
+    font-weight: 600;
+  }
+
+  .person-details {
+    color: var(--color-olive);
+    font-size: 0.95rem;
+    margin: 4px 0;
+    font-weight: 500;
+  }
+
+  .person-years {
+    color: var(--color-stone);
+    font-size: 0.85rem;
+    margin: 4px 0;
+    font-style: italic;
+  }
+
+  .person-reference {
+    color: var(--color-purple);
+    font-size: 0.8rem;
+    margin: 8px 0 0 0;
+    font-weight: 500;
+  }
+
+  /* Connection Lines */
+  .connection-line {
+    position: absolute;
+    background: var(--color-earth);
+  }
+
+  .connection-line.down {
+    width: 3px;
+    height: 40px;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .connection-line.up {
+    width: 3px;
+    height: 40px;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Expand Indicator */
+  .expand-indicator {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px dashed var(--color-earth);
+    color: var(--color-olive);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .expand-indicator:hover {
+    color: var(--color-earth);
+    transform: scale(1.05);
+  }
+
+  .expand-indicator i {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+  }
+
+  .descendants-count {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
   }
 
   /* Coming Soon Placeholder */
@@ -184,26 +632,399 @@ const data = genealogyData as GenealogyData;
 
   /* Mobile responsiveness */
   @media (max-width: 768px) {
-    .page-title {
-      font-size: 2rem;
+    .tree-controls {
+      top: 160px;
+      left: 20px;
+      right: auto;
+      padding: 10px;
+      flex-direction: column;
+      gap: 8px;
+      width: 60px;
     }
 
-    .instructions-grid {
-      grid-template-columns: 1fr;
+    .zoom-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 0.9rem;
     }
 
-    .legend-grid {
-      grid-template-columns: 1fr;
+    .zoom-level {
+      font-size: 0.65rem;
+      padding: 6px 4px;
+      background: var(--color-earth);
+      color: white;
+      border-radius: 8px;
+      margin: 4px 0;
     }
 
-    .coming-soon {
-      margin: 1rem;
-      padding: 2rem 1rem;
+    .person-node {
+      width: 220px;
+      padding: 15px;
     }
 
-    .coming-soon h2 {
-      font-size: 1.5rem;
+    .person-avatar {
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    .person-info h3 {
+      font-size: 1.2rem;
+    }
+
+    .person-details {
+      font-size: 0.9rem;
+    }
+
+    .person-years,
+    .person-reference {
+      font-size: 0.75rem;
+    }
+
+    .tree-level {
+      margin-bottom: 60px;
+    }
+
+    .genealogy-tree {
+      padding: 80px 20px;
+    }
+
+    /* Organograma responsivo - Tablet */
+    .org-chart-container {
+      min-width: 100%;
+      padding: 20px;
+    }
+
+    .children-row {
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .person-node {
+      width: 200px;
+      padding: 12px;
+    }
+
+    .person-node.branch {
+      width: 180px;
+      padding: 10px;
+    }
+
+    .level-3 .person-node {
+      width: 160px;
+      padding: 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .tree-controls {
+      top: 140px;
+      left: 15px;
+      width: 55px;
+      padding: 8px;
+    }
+
+    .zoom-btn {
+      width: 38px;
+      height: 38px;
+      font-size: 0.85rem;
+    }
+
+    .zoom-level {
+      font-size: 0.6rem;
+      padding: 4px 3px;
+    }
+
+    .person-node {
+      width: 180px;
+      padding: 12px;
+    }
+
+    .person-avatar {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+
+    .person-info h3 {
+      font-size: 1rem;
+    }
+
+    .person-details {
+      font-size: 0.8rem;
+    }
+
+    .descendants-count {
+      font-size: 0.7rem;
+    }
+
+    /* Organograma responsivo - Mobile */
+    .org-chart {
+      overflow-x: scroll;
+    }
+
+    .org-chart-container {
+      min-width: 800px;
+      padding: 15px;
+    }
+
+    .children-row {
+      gap: 15px;
+    }
+
+    .children-container {
+      margin-top: 40px;
+    }
+
+    .person-node {
+      width: 160px;
+      padding: 10px;
+    }
+
+    .person-node.branch {
+      width: 140px;
+      padding: 8px;
+    }
+
+    .level-3 .person-node {
+      width: 120px;
+      padding: 6px;
+    }
+
+    .person-name {
+      font-size: 0.9rem;
+    }
+
+    .person-details {
+      font-size: 0.75rem;
+    }
+
+    .connection-line-vertical {
+      height: 30px;
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .genealogy-tree {
+      padding: 50px 20px;
+    }
+
+    .person-node {
+      width: 240px;
+      padding: 15px;
+    }
+
+    .person-avatar {
+      width: 50px;
+      height: 50px;
+      font-size: 1.2rem;
+    }
+
+    .person-info h3 {
+      font-size: 1.2rem;
+    }
+
+    .person-details {
+      font-size: 0.9rem;
+    }
+
+    .generation-badge {
+      font-size: 0.7rem;
+      padding: 2px 6px;
+    }
+
+    .tree-controls {
+      top: 80px;
+      right: 10px;
+    }
+
+    .control-btn {
+      width: 35px;
+      height: 35px;
+      font-size: 0.9rem;
+    }
+
+    .tree-level {
+      margin-bottom: 60px;
+    }
+
+    .tree-level:not(:last-child)::after {
+      bottom: -60px;
+      height: 60px;
+    }
+
+    .tree-level:not(:last-child) .person-node::after {
+      bottom: -30px;
+      height: 30px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .person-node {
+      width: 200px;
+      padding: 12px;
+    }
+
+    .person-avatar {
+      width: 45px;
+      height: 45px;
+      font-size: 1rem;
+      margin-bottom: 10px;
+    }
+
+    .person-info h3 {
+      font-size: 1.1rem;
+    }
+
+    .person-details {
+      font-size: 0.85rem;
+    }
+
+    .person-years,
+    .person-reference {
+      font-size: 0.75rem;
+    }
+
+    .expand-indicator {
+      padding: 8px;
+    }
+
+    .descendants-count {
+      font-size: 0.7rem;
     }
   }
 </style>
+
+<script>
+  // Tree Navigation and Zoom Functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const treeContainer = document.getElementById('treeContainer');
+    const treeContent = document.getElementById('treeContent');
+    const zoomInBtn = document.getElementById('zoomIn');
+    const zoomOutBtn = document.getElementById('zoomOut');
+    const resetZoomBtn = document.getElementById('resetZoom');
+    const zoomLevel = document.getElementById('zoomLevel');
+    
+    if (!treeContainer || !treeContent) return;
+
+    let currentZoom = 1;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+    let translateX = 0;
+    let translateY = 0;
+
+    // Zoom functionality
+    function updateZoom() {
+      const zoomPercent = Math.round(currentZoom * 100);
+      if (zoomLevel) zoomLevel.textContent = `${zoomPercent}%`;
+      
+      if (treeContent) {
+        treeContent.style.transform = `translate(calc(-50% + ${translateX}px), calc(-50% + ${translateY}px)) scale(${currentZoom})`;
+      }
+    }
+
+    // Zoom In
+    if (zoomInBtn) {
+      zoomInBtn.addEventListener('click', () => {
+        currentZoom = Math.min(currentZoom + 0.2, 3);
+        updateZoom();
+      });
+    }
+
+    // Zoom Out
+    if (zoomOutBtn) {
+      zoomOutBtn.addEventListener('click', () => {
+        currentZoom = Math.max(currentZoom - 0.2, 0.3);
+        updateZoom();
+      });
+    }
+
+    // Reset Zoom
+    if (resetZoomBtn) {
+      resetZoomBtn.addEventListener('click', () => {
+        currentZoom = 1;
+        translateX = 0;
+        translateY = 0;
+        updateZoom();
+      });
+    }
+
+    // Mouse wheel zoom
+    treeContainer.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const delta = e.deltaY > 0 ? -0.1 : 0.1;
+      currentZoom = Math.min(Math.max(currentZoom + delta, 0.3), 3);
+      updateZoom();
+    });
+
+    // Drag to pan functionality
+    treeContainer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX - translateX;
+      startY = e.clientY - translateY;
+      treeContainer.style.cursor = 'grabbing';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      
+      translateX = e.clientX - startX;
+      translateY = e.clientY - startY;
+      updateZoom();
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      treeContainer.style.cursor = 'grab';
+    });
+
+    // Touch support for mobile
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    treeContainer.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      touchStartX = touch.clientX - translateX;
+      touchStartY = touch.clientY - translateY;
+    });
+
+    treeContainer.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const touch = e.touches[0];
+      translateX = touch.clientX - touchStartX;
+      translateY = touch.clientY - touchStartY;
+      updateZoom();
+    });
+
+    // Person node click handlers (placeholder for future expansion)
+    const personNodes = document.querySelectorAll('.person-node');
+    personNodes.forEach(node => {
+      node.addEventListener('click', (e) => {
+        // Prevent drag from triggering click
+        if (Math.abs(translateX) < 5 && Math.abs(translateY) < 5) {
+          const target = e.currentTarget as HTMLElement;
+          const personName = target?.querySelector('.person-name')?.textContent;
+          console.log('Person clicked:', personName);
+          // Future: Show person details modal
+        }
+      });
+    });
+
+    // Expand indicator click (placeholder)
+    const expandIndicators = document.querySelectorAll('.expand-indicator');
+    expandIndicators.forEach(indicator => {
+      indicator.addEventListener('click', (e) => {
+        e.stopPropagation();
+        console.log('Expand genealogy tree');
+        // Future: Load and display more generations
+      });
+    });
+
+    // Initialize
+    updateZoom();
+  });
+</script>
 
