@@ -10,7 +10,7 @@ O Browser MCP está configurado para testar sua aplicação Astro localmente dur
 
 ```bash
 # Terminal 1: Iniciar Astro dev server
-npm run dev
+cd /Users/alexvenceslau/dev/linhagem-de-adao/app && npm run dev
 
 # Depois use MCP para testar:
 "Navigate to http://localhost:4321 and verify the page loads correctly"

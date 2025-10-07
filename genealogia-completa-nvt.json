@@ -7,7 +7,7 @@
   "totalGenerations": 69,
   "blocks": [
     {
-      "name": "Bloco Pré-Dilúvio: De Adão a Noé",
+      "name": "Pré-Dilúvio: De Adão a Noé",
       "generations": 17,
       "entries": [
         {
@@ -203,7 +203,7 @@
       ]
     },
     {
-      "name": "Bloco Pós-Dilúvio: De Noé a Abraão",
+      "name": "Pós-Dilúvio: De Noé a Abraão",
       "generations": 10,
       "entries": [
         {
@@ -309,7 +309,7 @@
       ]
     },
     {
-      "name": "Bloco 1: De Abraão a Davi",
+      "name": "De Abraão a Davi",
       "generations": 14,
       "entries": [
         {
@@ -413,7 +413,7 @@
       ]
     },
     {
-      "name": "Bloco 2: De Davi ao Exílio na Babilônia",
+      "name": "De Davi ao Exílio na Babilônia",
       "generations": 14,
       "entries": [
         {
@@ -517,7 +517,7 @@
       ]
     },
     {
-      "name": "Bloco 3: Do Exílio na Babilônia a Cristo",
+      "name": "Do Exílio na Babilônia a Cristo",
       "generations": 14,
       "entries": [
         {
